@@ -5,7 +5,6 @@ import jdd.bdd.BDD;
 import java.util.ArrayList;
 import java.util.List;
 
-
 class ConstraintHandler {
 	List<VariableAndBDD> parameters = null;
 	BDD bdd;
