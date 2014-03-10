@@ -544,4 +544,9 @@ class PairList {
 
 class OutOfMaxNumOfTestcasesException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5868569262849102341L;
+
 }

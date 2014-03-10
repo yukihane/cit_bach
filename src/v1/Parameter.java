@@ -63,6 +63,16 @@ class PList extends LinkedList<Parameter> {
 }
 
 class NoParameterNameException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6603037538755301907L;
 }
 class NoValueNameException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -92079148371461108L;
 }

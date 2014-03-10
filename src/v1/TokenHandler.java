@@ -31,4 +31,9 @@ public class TokenHandler {
 }
 
 class OutOfTokenStreamException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1260796740785437458L;
 }
