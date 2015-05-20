@@ -1,6 +1,7 @@
 package v1;
 
 import jdd.bdd.BDD;
+import jdd.bdd.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ class ConstraintHandler {
 	ConstraintHandler(PList parameterList, List<Node> constraintList) {
 		//TODO BDDを設定 -> 1000, ... 文字定数化
 		bdd = new BDD(1000,1000);
+		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
 		
 		//parameterのリスト
 		parameters = setBDDforParameter(parameterList);
@@ -60,29 +62,33 @@ class ConstraintHandler {
 			// domain-1の2進表現では，最上位の変数にあたるビットは常に1
 			// とは限らない
 			int f = bdd.getZero();
+			bdd.ref(f);
 			// domain-1より小さい数
 			for (int i = var.length - 1; i >= 0; i--) {
 				if ((p.value_name.size() - 1 & (0x01 << i)) > 0) {
 					int g = bdd.getOne(); 
+					bdd.ref(g);
 					for (int j = var.length - 1; j > i; j--) {
 						if ((p.value_name.size() - 1 & (0x01 << j)) > 0) {
-							g = bdd.and(g, var[j]);
+							g = bdd.ref(bdd.and(g, var[j]));
 						} else {
-							g = bdd.and(g, bdd.not(var[j]));
+							g = bdd.ref(bdd.and(g, bdd.not(var[j])));
 						}
 					}
-					f = bdd.or(f, bdd.and(g, bdd.not(var[i])));
+					g = bdd.ref(bdd.and(g, bdd.not(var[i])));
+					f = bdd.ref(bdd.or(f, g));
 				}
 			}
-			bdd.ref(f);
+			bdd.ref(f); // useless?
 			
 			// domain - 1自身
 			int g = bdd.getOne(); 
+			bdd.ref(g);
 			for (int i = var.length - 1; i >= 0; i--) {
 				if ((p.value_name.size() - 1 & (0x01 << i)) > 0) {
-					g = bdd.and(g, var[i]);
+					g = bdd.ref(bdd.and(g, var[i]));
 				} else {
-					g = bdd.and(g, bdd.not(var[i]));
+					g = bdd.ref(bdd.and(g, bdd.not(var[i])));
 				}
 			}
 			bdd.ref(g);
@@ -101,15 +107,18 @@ class ConstraintHandler {
 	private int setBddConstraint(List<Node> constraintList) {
 		// TODO Auto-generated method stub
 		int f = bdd.getOne();
+		bdd.ref(f);
 		
 		// パラメータでつかわない領域をfalseにする
 		for (VariableAndBDD vb : parameters) {
 			f = bdd.and(f, vb.constraint);
+			bdd.ref(f);
 		}
 		
 		// 制約式の論理積をとる
 		for (Node n: constraintList) {
 			int g = n.evaluate(bdd, parameters);
+			bdd.ref(g);
 			f = bdd.and(f, g);
 			bdd.ref(f);
 			bdd.deref(g);
@@ -127,7 +136,7 @@ class ConstraintHandler {
 		for (VariableAndBDD p : parameters) {
 			int cube = p.var[0];
 			for (int i = 1; i < p.var.length; i++) {
-				cube = bdd.and(cube, p.var[i]);
+				cube = bdd.ref(bdd.and(cube, p.var[i]));
 			}
 			bdd.ref(cube);
 			int tmp0 = bdd.ref(bdd.exists(f, cube));
