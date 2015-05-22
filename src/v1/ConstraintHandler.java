@@ -7,14 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ConstraintHandler {
+	static final int sizeOfNodetable = 1000;
+	static final int sizeOfCache = 1000;
+	
 	List<VariableAndBDD> parameters = null;
 	BDD bdd;
 	int bddConstraint;
 	int numOfBDDvariables;
 	
 	ConstraintHandler(PList parameterList, List<Node> constraintList) {
-		//TODO BDDを設定 -> 1000, ... 文字定数化
-		bdd = new BDD(1000,1000);
+		bdd = new BDD(sizeOfNodetable, sizeOfCache);
 		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
 		
 		//parameterのリスト
@@ -70,28 +72,26 @@ class ConstraintHandler {
 					bdd.ref(g);
 					for (int j = var.length - 1; j > i; j--) {
 						if ((p.value_name.size() - 1 & (0x01 << j)) > 0) {
-							g = bdd.ref(bdd.and(g, var[j]));
+							int tmp = bdd.ref(bdd.and(g, var[j])); bdd.deref(g); g = tmp;
 						} else {
-							g = bdd.ref(bdd.and(g, bdd.not(var[j])));
+							int tmp = bdd.ref(bdd.and(g, bdd.not(var[j]))); bdd.deref(g); g = tmp;
 						}
 					}
-					g = bdd.ref(bdd.and(g, bdd.not(var[i])));
-					f = bdd.ref(bdd.or(f, g));
+					int tmp = bdd.ref(bdd.and(g, bdd.not(var[i]))); bdd.deref(g); g = tmp;
+					tmp = bdd.ref(bdd.or(f, g)); bdd.deref(g); f = tmp; 
 				}
 			}
-			bdd.ref(f); // useless?
 			
 			// domain - 1自身
 			int g = bdd.getOne(); 
 			bdd.ref(g);
 			for (int i = var.length - 1; i >= 0; i--) {
 				if ((p.value_name.size() - 1 & (0x01 << i)) > 0) {
-					g = bdd.ref(bdd.and(g, var[i]));
+					int tmp = bdd.ref(bdd.and(g, var[i])); bdd.deref(g); g = tmp;
 				} else {
-					g = bdd.ref(bdd.and(g, bdd.not(var[i])));
+					int tmp = bdd.ref(bdd.and(g, bdd.not(var[i]))); bdd.deref(g); g = tmp;
 				}
 			}
-			bdd.ref(g);
 			
 			int d = bdd.or(f, g);
 			bdd.ref(d);
@@ -105,25 +105,19 @@ class ConstraintHandler {
 	}
 
 	private int setBddConstraint(List<Node> constraintList) {
-		// TODO Auto-generated method stub
 		int f = bdd.getOne();
 		bdd.ref(f);
 		
 		// パラメータでつかわない領域をfalseにする
 		for (VariableAndBDD vb : parameters) {
-			f = bdd.and(f, vb.constraint);
-			bdd.ref(f);
+			int tmp = bdd.ref(bdd.and(f, vb.constraint)); bdd.deref(f); f = tmp;
 		}
 		
 		// 制約式の論理積をとる
 		for (Node n: constraintList) {
 			int g = n.evaluate(bdd, parameters);
-			bdd.ref(g);
-			f = bdd.and(f, g);
-			bdd.ref(f);
-			bdd.deref(g);
+			int tmp = bdd.ref(bdd.and(f, g)); bdd.deref(f); bdd.deref(g); f = tmp;
 		}
-//		bdd.ref(f);
 		
 		// *を付加
 		f = extendBddConstraint(f);
@@ -135,17 +129,13 @@ class ConstraintHandler {
 		int f = constraint;
 		for (VariableAndBDD p : parameters) {
 			int cube = p.var[0];
-			for (int i = 1; i < p.var.length; i++) {
-				cube = bdd.ref(bdd.and(cube, p.var[i]));
-			}
 			bdd.ref(cube);
+			for (int i = 1; i < p.var.length; i++) {
+				int tmp = bdd.ref(bdd.and(cube, p.var[i])); bdd.deref(cube); cube = tmp;
+			}
 			int tmp0 = bdd.ref(bdd.exists(f, cube));
-			bdd.ref(tmp0);
 			int tmp = bdd.ref(bdd.and(tmp0, cube));
-			bdd.ref(tmp);
-			int newf =
-				bdd.ref(bdd.or(f, tmp));
-			bdd.ref(newf);
+			int newf = bdd.ref(bdd.or(f, tmp));
 			
 			bdd.deref(cube);
 			bdd.deref(tmp0);
@@ -156,7 +146,7 @@ class ConstraintHandler {
 		return f;
 	}
 	
-	//TODO テストケースが制約を満たすか
+	// テストケースが制約を満たすか
 	boolean isPossible (Testcase test) {
 		int node = bddConstraint;
 		boolean[] bv = binarize(test);

@@ -175,18 +175,16 @@ class EqualityOfParameterAndValue extends ComparisonOfParameterAndValue {
 	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
 		int res = bdd.getOne();
 		bdd.ref(res);
-		// deref •K—vH
 		int[] var = parameters.get(this.p).var;
 		for (int i = var.length - 1; i >= 0; i--) {
-			if ((this.v & (0x01 << i)) > 0)
-				res = bdd.ref(bdd.and(res, var[i]));
-			else
-				res = bdd.ref(bdd.and(res, bdd.not(var[i])));
+			if ((this.v & (0x01 << i)) > 0) {
+				int tmp = bdd.ref(bdd.and(res, var[i])); bdd.deref(res); res = tmp;
+			}
+			else {
+				int tmp = bdd.ref(bdd.and(res, bdd.not(var[i]))); bdd.deref(res); res = tmp;
+			}
 		}
 		bdd.ref(res);
 		return res;
 	}
 }
-
-
-
