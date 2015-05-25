@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class Error {
-	
+
 	// default でエラーは標準出力
 	static String filename = null;
 
 	static void setOutputFile(String filename) {
 		Error.filename = filename;
 	}
-		
+
 	static void printError(String str) {
 		BufferedWriter writer;
 		try {
@@ -24,7 +24,9 @@ public class Error {
 			writer.write("#ERROR," + str + "\n");
 			writer.close();
 		} catch (IOException e) {
-			System.err.print("出力ファイル" + filename + "が作成できません．");
+			System.err.print(Main.language == Main.Language.JP ? "出力ファイル"
+					+ filename + "が作成できません．" : "Output file " + filename
+					+ " could not be created.");
 		}
 		System.exit(1);
 	}

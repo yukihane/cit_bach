@@ -1,4 +1,5 @@
 package v1;
+
 import jdd.bdd.*;
 
 import java.util.*;
@@ -7,7 +8,7 @@ abstract class Node {
 	abstract int evaluate(BDD bdd, List<VariableAndBDD> parameters);
 }
 
-abstract class BooleanOperator extends Node{
+abstract class BooleanOperator extends Node {
 }
 
 abstract class BooleanUnaryOperator extends BooleanOperator {
@@ -15,8 +16,8 @@ abstract class BooleanUnaryOperator extends BooleanOperator {
 }
 
 class NotOperator extends BooleanUnaryOperator {
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
-		int tmp =  Child.evaluate(bdd, parameters);
+	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
+		int tmp = Child.evaluate(bdd, parameters);
 		int res = bdd.not(tmp);
 		bdd.ref(res);
 		bdd.deref(tmp);
@@ -29,34 +30,37 @@ abstract class BooleanBinaryOperator extends BooleanOperator {
 }
 
 class IfOperator extends BooleanBinaryOperator {
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
+	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
 		int f1 = Left.evaluate(bdd, parameters);
 		int f2 = Right.evaluate(bdd, parameters);
 		int f = bdd.imp(f1, f2);
 		bdd.ref(f);
-		bdd.deref(f1); bdd.deref(f2);
+		bdd.deref(f1);
+		bdd.deref(f2);
 		return f;
 	}
 }
 
 class EqualityOperator extends BooleanBinaryOperator {
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
+	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
 		int f1 = Left.evaluate(bdd, parameters);
 		int f2 = Right.evaluate(bdd, parameters);
 		int f = bdd.not(bdd.xor(f1, f2));
 		bdd.ref(f);
-		bdd.deref(f1); bdd.deref(f2);
+		bdd.deref(f1);
+		bdd.deref(f2);
 		return f;
 	}
 }
 
 class InequalityOperator extends BooleanBinaryOperator {
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
+	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
 		int f1 = Left.evaluate(bdd, parameters);
 		int f2 = Right.evaluate(bdd, parameters);
 		int f = bdd.xor(f1, f2);
 		bdd.ref(f);
-		bdd.deref(f1); bdd.deref(f2);
+		bdd.deref(f1);
+		bdd.deref(f2);
 		return f;
 	}
 }
@@ -66,13 +70,15 @@ abstract class BooleanTrinaryOperator extends BooleanOperator {
 }
 
 class IfthenelseOperator extends BooleanTrinaryOperator {
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
-			int f1 = Left.evaluate(bdd, parameters);
+	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
+		int f1 = Left.evaluate(bdd, parameters);
 		int f2 = Middle.evaluate(bdd, parameters);
 		int f3 = Right.evaluate(bdd, parameters);
 		int f = bdd.ite(f1, f2, f3);
 		bdd.ref(f);
-		bdd.deref(f1); bdd.deref(f2); bdd.deref(f3);
+		bdd.deref(f1);
+		bdd.deref(f2);
+		bdd.deref(f3);
 		return f;
 	}
 }
@@ -82,45 +88,49 @@ abstract class BooleanMultinaryOperator extends BooleanOperator {
 }
 
 class OrOperator extends BooleanMultinaryOperator {
-	
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
+
+	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
 		int f1 = ChildList.get(0).evaluate(bdd, parameters);
 		int f2 = ChildList.get(1).evaluate(bdd, parameters);
 		int f = bdd.or(f1, f2);
 		bdd.ref(f);
-		bdd.deref(f1); bdd.deref(f2);
+		bdd.deref(f1);
+		bdd.deref(f2);
 
 		for (int i = 2; i < ChildList.size(); i++) {
 			f1 = f;
 			f2 = ChildList.get(i).evaluate(bdd, parameters);
 			f = bdd.or(f1, f2);
 			bdd.ref(f);
-			bdd.deref(f1); bdd.deref(f2);
+			bdd.deref(f1);
+			bdd.deref(f2);
 		}
 		return f;
 	}
 }
 
 class AndOperator extends BooleanMultinaryOperator {
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
+	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
 		int f1 = ChildList.get(0).evaluate(bdd, parameters);
 		int f2 = ChildList.get(1).evaluate(bdd, parameters);
 		int f = bdd.and(f1, f2);
 		bdd.ref(f);
-		bdd.deref(f1); bdd.deref(f2);
+		bdd.deref(f1);
+		bdd.deref(f2);
 
 		for (int i = 2; i < ChildList.size(); i++) {
 			f1 = f;
 			f2 = ChildList.get(i).evaluate(bdd, parameters);
 			f = bdd.and(f1, f2);
 			bdd.ref(f);
-			bdd.deref(f1); bdd.deref(f2);
+			bdd.deref(f1);
+			bdd.deref(f2);
 		}
 		return f;
 	}
 }
 
-abstract class AtomicExpression extends Node{
+abstract class AtomicExpression extends Node {
 }
 
 abstract class Constant extends AtomicExpression {
@@ -128,11 +138,11 @@ abstract class Constant extends AtomicExpression {
 
 class TrueValue extends Constant {
 	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
-		
+
 		int f = bdd.getOne();
 		bdd.ref(f);
 		return f;
-	}	
+	}
 }
 
 class FalseValue extends Constant {
@@ -140,7 +150,7 @@ class FalseValue extends Constant {
 		int f = bdd.getZero();
 		bdd.ref(f);
 		return f;
-	}	
+	}
 }
 
 abstract class ComparisonOfValueAndValue extends AtomicExpression {
@@ -148,12 +158,10 @@ abstract class ComparisonOfValueAndValue extends AtomicExpression {
 	int v2;
 }
 
-/* not used
-abstract class ComparisonOfParameterAndParameter extends AtomicExpression {
-	int p1;
-	int p2;
-}
-*/
+/*
+ * not used abstract class ComparisonOfParameterAndParameter extends
+ * AtomicExpression { int p1; int p2; }
+ */
 
 abstract class ComparisonOfParameterAndValue extends AtomicExpression {
 	int p;
@@ -161,15 +169,10 @@ abstract class ComparisonOfParameterAndValue extends AtomicExpression {
 }
 
 /*
-class EqualityOfValueAndValue extends ComparisonOfValueAndValue {
-	int evaluate (BDD bdd, List<VariableAndBDD> parameters) {
-		if (v1 == v2) 
-			return bdd.getOne();
-		else
-			return bdd.getZero();
-	}
-}
-*/
+ * class EqualityOfValueAndValue extends ComparisonOfValueAndValue { int
+ * evaluate (BDD bdd, List<VariableAndBDD> parameters) { if (v1 == v2) return
+ * bdd.getOne(); else return bdd.getZero(); } }
+ */
 
 class EqualityOfParameterAndValue extends ComparisonOfParameterAndValue {
 	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
@@ -178,10 +181,13 @@ class EqualityOfParameterAndValue extends ComparisonOfParameterAndValue {
 		int[] var = parameters.get(this.p).var;
 		for (int i = var.length - 1; i >= 0; i--) {
 			if ((this.v & (0x01 << i)) > 0) {
-				int tmp = bdd.ref(bdd.and(res, var[i])); bdd.deref(res); res = tmp;
-			}
-			else {
-				int tmp = bdd.ref(bdd.and(res, bdd.not(var[i]))); bdd.deref(res); res = tmp;
+				int tmp = bdd.ref(bdd.and(res, var[i]));
+				bdd.deref(res);
+				res = tmp;
+			} else {
+				int tmp = bdd.ref(bdd.and(res, bdd.not(var[i])));
+				bdd.deref(res);
+				res = tmp;
 			}
 		}
 		bdd.ref(res);

@@ -13,5 +13,5 @@ public class ParameterModel {
 			range[i] = (byte) plist.get(i).value_name.size();
 		}
 	}
-	
+
 }

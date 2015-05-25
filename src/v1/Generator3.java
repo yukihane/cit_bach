@@ -32,19 +32,19 @@ class Generator3 extends Generator {
 		int seedrownum = 0;
 		while (numOfUncoveredTuples > 0 || hasTuplesToCover(tupleSequenceList)) {
 			// testcase 1個生成
-			ResultOfGenerateOneTest newresult 
-			= generateOneTest(tab, seedrownum, uncovTab, tupleSequenceList);
+			ResultOfGenerateOneTest newresult = generateOneTest(tab,
+					seedrownum, uncovTab, tupleSequenceList);
 
 			res.add(newresult.test);
-			if (res.size() > MaxNumOfTestcases) 
+			if (res.size() > MaxNumOfTestcases)
 				throw new OutOfMaxNumOfTestcasesException();
-			
+
 			numOfUncoveredTuples -= newresult.numOfCoveredTuples;
 			seedrownum = newresult.nextSeedRow;
 		}
 		return res;
 	}
-	
+
 	private int checkAllTuples(TripleTable tab) {
 		// strength = 3
 		int numOfTriples = 0;
@@ -54,7 +54,7 @@ class Generator3 extends Generator {
 					for (byte v1 = 0; v1 < parametermodel.range[i]; v1++)
 						for (byte v2 = 0; v2 < parametermodel.range[j]; v2++)
 							for (byte v3 = 0; v3 < parametermodel.range[k]; v3++) {
-								assert(i < j && j < k);
+								assert (i < j && j < k);
 								// tripleの生成
 								Testcase triple = new Testcase(numOfParameters);
 								triple.quantify();
@@ -73,8 +73,9 @@ class Generator3 extends Generator {
 		}
 		return numOfTriples;
 	}
-	
-	private void initializeUncovTab(ArrayList<Integer>[] uncovTab, TripleTable tab) {
+
+	private void initializeUncovTab(ArrayList<Integer>[] uncovTab,
+			TripleTable tab) {
 		assert (parametermodel.size == uncovTab.length);
 		// uncovTabの計算．triple (strength = 3) の場合
 		for (int p = 0; p < parametermodel.size; p++) {
@@ -97,90 +98,102 @@ class Generator3 extends Generator {
 			}
 		}
 	}
-	
-	private ResultOfGenerateOneTest generateOneTest(TripleTable tab, int seedrownum, ArrayList<Integer>[] uncovTab, List<List<Testcase>> tupleSequenceList) {
+
+	private ResultOfGenerateOneTest generateOneTest(TripleTable tab,
+			int seedrownum, ArrayList<Integer>[] uncovTab,
+			List<List<Testcase>> tupleSequenceList) {
 		// 空のテストケースを1つつくる
 		Testcase tmp = new Testcase(parametermodel.size);
 		tmp.quantify();
-		
+
 		boolean isSeedUsed = false;
 		// seedのコピー　制約を満たさなかったらエラー
-		if (seed.size() > 0 && seedrownum < seed.size() ) {
+		if (seed.size() > 0 && seedrownum < seed.size()) {
 			isSeedUsed = true;
-			Testcase seedrow = seed.get(seedrownum);			
+			Testcase seedrow = seed.get(seedrownum);
 			for (int i = 0; i < parametermodel.size; i++) {
 				tmp.set(i, seedrow.get(i));
 			}
 		}
 		if (constrainthandler.isPossible(tmp) == false) {
-			Error.printError("seedの" + (seedrownum + 1) + "行目が制約違反です");
+			Error.printError(Main.language == Main.Language.JP ? "seedの"
+					+ (seedrownum + 1) + "行目が制約違反です" : "The" + (seedrownum + 1)
+					+ "th seeding row violates the constraints.");
+
 			return null;
 		}
 
 		// 2.20
 		// tmpにグループを追加
 		boolean isGroupUsed = addGroupedTuples(tmp, tupleSequenceList);
-		
+
 		// TODO 繰り返させる
 		// generateTempTest では tabを更新しない
 		Testcase temptest = generateTempTest(tmp, tab, uncovTab);
 		// 2.20
 		// 0カバーの場合
-		if (isSeedUsed == false && isGroupUsed == false && computeNewlyCoveredTuples(tab, temptest) == 0) {
+		if (isSeedUsed == false && isGroupUsed == false
+				&& computeNewlyCoveredTuples(tab, temptest) == 0) {
 			addUncoveredTuple(tmp, tab, uncovTab);
 			temptest = generateTempTest(tmp, tab, uncovTab);
 		}
-		
+
 		// カバーしたペアーを実際にuncovTabに反映
 		// finalizePairTableより前でないとだめ
 		finallizeUncoverTable(uncovTab, tab, temptest);
 
 		// カバーしたペアーを実際にtabに反映
 		int newtuples = finalizeTupleTable(tab, temptest);
-		
+
 		// 返り値の設定
 		ResultOfGenerateOneTest res = new ResultOfGenerateOneTest();
 		res.test = temptest;
 		res.numOfCoveredTuples = newtuples;
 		if (isSeedUsed) {
 			res.nextSeedRow = seedrownum + 1;
-		} else 
+		} else
 			res.nextSeedRow = seedrownum;
 		return res;
 	}
-	
+
 	private void finallizeUncoverTable(ArrayList<Integer>[] uncovTab,
 			TripleTable tab, Testcase temptest) {
 		for (int p = 0; p < this.parametermodel.size; p++) {
 			int numCovered = 0;
 			byte v = temptest.get(p);
-			if (v < 0) continue;
-			
+			if (v < 0)
+				continue;
+
 			for (int p1 = 0; p1 < this.parametermodel.size - 1; p1++) {
 				for (int p2 = p1 + 1; p2 < this.parametermodel.size; p2++) {
-					if (p == p1 || p == p2) continue;
+					if (p == p1 || p == p2)
+						continue;
 					byte v1 = temptest.get(p1);
-					if (v1 < 0) continue;
+					if (v1 < 0)
+						continue;
 					byte v2 = temptest.get(p2);
-					if (v2 < 0) continue;
+					if (v2 < 0)
+						continue;
 					if (tab.get(p, v, p1, v1, p2, v2) == false)
 						numCovered++;
 				}
 			}
-			
+
 			int numUncovered = uncovTab[p].get(v);
 			uncovTab[p].set(v, numUncovered - numCovered);
 		}
-		
+
 	}
-	
+
 	private int finalizeTupleTable(TripleTable tab, Testcase test) {
 		int numOfNewlyCoveredTuples = 0;
 		for (int p0 = 0; p0 < numOfParameters - 2; p0++) {
 			for (int p1 = p0 + 1; p1 < numOfParameters - 1; p1++) {
 				for (int p2 = p1 + 1; p2 < numOfParameters; p2++) {
-					if (tab.get(p0, test.get(p0), p1, test.get(p1), p2, test.get(p2)) == false) {
-						tab.set(p0, test.get(p0), p1, test.get(p1), p2, test.get(p2));
+					if (tab.get(p0, test.get(p0), p1, test.get(p1), p2,
+							test.get(p2)) == false) {
+						tab.set(p0, test.get(p0), p1, test.get(p1), p2,
+								test.get(p2));
 						numOfNewlyCoveredTuples++;
 					}
 				}
@@ -188,19 +201,22 @@ class Generator3 extends Generator {
 		}
 		return numOfNewlyCoveredTuples;
 	}
-	
+
 	// 2.20
 	// 前の位置をおぼえておく
-	private void addUncoveredTuple(Testcase tmp, TripleTable tab, ArrayList<Integer>[] uncovTab) {
-		
-		for (int p0 = 0; p0 < numOfParameters - 2; p0++) 
+	private void addUncoveredTuple(Testcase tmp, TripleTable tab,
+			ArrayList<Integer>[] uncovTab) {
+
+		for (int p0 = 0; p0 < numOfParameters - 2; p0++)
 			for (byte v0 = 0; v0 < this.parametermodel.range[p0]; v0++) {
-				if (uncovTab[p0].get(v0) == 0) continue; 
-				for (int p1 = p0 + 1; p1 < numOfParameters - 1; p1++) 
+				if (uncovTab[p0].get(v0) == 0)
+					continue;
+				for (int p1 = p0 + 1; p1 < numOfParameters - 1; p1++)
 					for (byte v1 = 0; v1 < this.parametermodel.range[p1]; v1++) {
-						if (uncovTab[p1].get(v1) == 0) continue;
-						for (int p2 = p1 + 1; p2 < numOfParameters; p2++) 
-							for (byte v2 = 0; v2 < this.parametermodel.range[p2]; v2++) 
+						if (uncovTab[p1].get(v1) == 0)
+							continue;
+						for (int p2 = p1 + 1; p2 < numOfParameters; p2++)
+							for (byte v2 = 0; v2 < this.parametermodel.range[p2]; v2++)
 								if (tab.get(p0, v0, p1, v1, p2, v2) == false) {
 									tmp.set(p0, v0);
 									tmp.set(p1, v1);
@@ -210,10 +226,11 @@ class Generator3 extends Generator {
 					}
 			}
 	}
-	
+
 	// 2.20
 	// return true if tuples from at least one group are added.
-	private boolean addGroupedTuples(Testcase tmp, List<List<Testcase>> tupleSequenceList) {
+	private boolean addGroupedTuples(Testcase tmp,
+			List<List<Testcase>> tupleSequenceList) {
 		boolean isGroupAdded = false;
 		for (List<Testcase> TupleSequence : tupleSequenceList) {
 			for (int i = 0; i < TupleSequence.size(); i++) {
@@ -224,25 +241,26 @@ class Generator3 extends Generator {
 					break;
 				}
 			}
-		} 
+		}
 		return isGroupAdded;
 	}
 
-	private Testcase generateTempTest(Testcase seedrow, TripleTable tab, ArrayList<Integer>[] uncovTab) {
-		
+	private Testcase generateTempTest(Testcase seedrow, TripleTable tab,
+			ArrayList<Integer>[] uncovTab) {
+
 		// tmpをコピー
 		Testcase tmp = seedrow.makeClone();
-		
+
 		// TODO ランダムな因子列を生成
 		int[] parametersequence = new int[parametermodel.size];
-		for (int i = 0; i < parametermodel.size; i++) 
+		for (int i = 0; i < parametermodel.size; i++)
 			parametersequence[i] = i;
 		// シャッフル
 		for (int i = 1; i < parametermodel.size; i++) {
 			int dst = this.rnd.nextInt(i + 1);
 			int tmppara = parametersequence[i];
-			parametersequence[i] = parametersequence[dst]; 
-			parametersequence[dst] = tmppara; 
+			parametersequence[i] = parametersequence[dst];
+			parametersequence[dst] = tmppara;
 		}
 
 		// 各因子について
@@ -265,17 +283,18 @@ class Generator3 extends Generator {
 				}
 				// assert (bestValue >= 0) : "error in chosing a value";
 				if (bestValue == -1) {
-					Error.printError("seedに制約違反の行があります");
+					Error.printError(Main.language == Main.Language.JP ? "seedに制約違反の行があります"
+							: "Some seeding row violates the constraints.");
 					return null;
 				}
 				if (newlyCoveredTuples == 0) {
 					// TODO カバー数 0 なら，期待されるペア数を数え，最大のものを選択
 					// TODO 期待するペア数には，絶対にむりなものもある（すでに値が決まっている因子とのペア）
 					bestValue = -1;
-					int possibleTuples = -1; 
+					int possibleTuples = -1;
 					// for tie breaking
-					List<Byte>candidateValues = new ArrayList<Byte>(); 
-					
+					List<Byte> candidateValues = new ArrayList<Byte>();
+
 					for (byte v = 0; v < this.parametermodel.range[p]; v++) {
 						tmp.set(p, v);
 						if (constrainthandler.isPossible(tmp)) {
@@ -285,19 +304,20 @@ class Generator3 extends Generator {
 								possibleTuples = newtuples;
 							}
 							// for tie breaking
-							if (newtuples == 0 && possibleTuples == 0) 
+							if (newtuples == 0 && possibleTuples == 0)
 								candidateValues.add(v);
 						}
 					}
 					// どれを選んでも同じなら，ランダムに選ぶ
 					// for tie breaking
-					if (possibleTuples == 0) 
-						bestValue = candidateValues.get(this.rnd.nextInt(candidateValues.size()));
+					if (possibleTuples == 0)
+						bestValue = candidateValues.get(this.rnd
+								.nextInt(candidateValues.size()));
 				}
 				tmp.set(p, bestValue);
 			}
 		}
-		
+
 		// 新カバーが0ということもある
 		return tmp;
 	}
@@ -306,8 +326,10 @@ class Generator3 extends Generator {
 		int numOfNewlyCoveredTuples = 0;
 		for (int p1 = 0; p1 < numOfParameters - 1; p1++) {
 			for (int p2 = p1 + 1; p2 < numOfParameters; p2++) {
-				if (p == p1 || p == p2) continue;
-				if (test.get(p1) < 0 || test.get(p2) < 0) continue;
+				if (p == p1 || p == p2)
+					continue;
+				if (test.get(p1) < 0 || test.get(p2) < 0)
+					continue;
 				if (tab.get(p, test.get(p), p1, test.get(p1), p2, test.get(p2)) == false) {
 					numOfNewlyCoveredTuples++;
 				}
@@ -315,7 +337,7 @@ class Generator3 extends Generator {
 		}
 		return numOfNewlyCoveredTuples;
 	}
-	
+
 	// 2.20
 	// copy from finalize....
 	private int computeNewlyCoveredTuples(TripleTable tab, Testcase test) {
@@ -323,7 +345,8 @@ class Generator3 extends Generator {
 		for (int p0 = 0; p0 < numOfParameters - 2; p0++) {
 			for (int p1 = p0 + 1; p1 < numOfParameters - 1; p1++) {
 				for (int p2 = p1 + 1; p2 < numOfParameters; p2++) {
-					if (tab.get(p0, test.get(p0), p1, test.get(p1), p2, test.get(p2)) == false) {
+					if (tab.get(p0, test.get(p0), p1, test.get(p1), p2,
+							test.get(p2)) == false) {
 						numOfNewlyCoveredTuples++;
 					}
 				}
@@ -333,11 +356,10 @@ class Generator3 extends Generator {
 	}
 }
 
-
 class TripleTable extends TupleTable {
 	TripleList[][][] table;
 	ParameterModel parametermodel;
-	
+
 	TripleTable(ParameterModel parametermodel) {
 		this.parametermodel = parametermodel;
 		int n = parametermodel.size;
@@ -346,8 +368,10 @@ class TripleTable extends TupleTable {
 			for (int j = 0; j < n; j++) {
 				for (int k = 0; k < n; k++) {
 					if (i < j && j < k)
-						table[i][j][k] = new TripleList(parametermodel.range[i],
-								parametermodel.range[j], parametermodel.range[k]);
+						table[i][j][k] = new TripleList(
+								parametermodel.range[i],
+								parametermodel.range[j],
+								parametermodel.range[k]);
 					else if (i > j) {
 						// TODO: エラーがでる？なんで？
 						// table[i][j].list = table[j][i].list.clone();
@@ -356,7 +380,7 @@ class TripleTable extends TupleTable {
 			}
 		}
 	}
-	
+
 	// requires p1 != p2 != p3
 	boolean get(int p1, byte v1, int p2, byte v2, int p3, byte v3) {
 		// TODO Auto-generated method stub
@@ -367,25 +391,25 @@ class TripleTable extends TupleTable {
 		pv[1] = new ParameterValuePair(p2, v2);
 		pv[2] = new ParameterValuePair(p3, v3);
 		Arrays.sort(pv, new ParameterValuePairComparator());
-		
-//		return this.table[pv[1].p][pv[2].p][pv[3].p].list[getOffset(p1, v1, p2, v2, p3, v3)];
+
+		// return this.table[pv[1].p][pv[2].p][pv[3].p].list[getOffset(p1, v1,
+		// p2, v2, p3, v3)];
 		return this.table[pv[0].p][pv[1].p][pv[2].p].list[getOffset(pv)];
 
 	}
 
 	// 現れない場合．すでにカバーした場合
 	// requires p1 != p2 != p3
-	void set(int p1, byte v1, int p2,  byte v2, int p3, byte v3) {
+	void set(int p1, byte v1, int p2, byte v2, int p3, byte v3) {
 		ParameterValuePair[] pv = new ParameterValuePair[3];
 		pv[0] = new ParameterValuePair(p1, v1);
 		pv[1] = new ParameterValuePair(p2, v2);
 		pv[2] = new ParameterValuePair(p3, v3);
 		Arrays.sort(pv, new ParameterValuePairComparator());
-		
+
 		this.table[pv[0].p][pv[1].p][pv[2].p].list[getOffset(pv)] = true;
 	}
-	
-	
+
 	private int getOffset(ParameterValuePair[] pv) {
 		int offset = pv[0].v;
 		for (int i = 1; i < pv.length; i++) {
@@ -399,9 +423,9 @@ class TripleTable extends TupleTable {
 	}
 }
 
-
 class TripleList {
 	boolean[] list;
+
 	TripleList(byte range1, byte range2, byte range3) {
 		this.list = new boolean[range1 * range2 * range3];
 	}
@@ -410,7 +434,8 @@ class TripleList {
 class ParameterValuePair {
 	int p;
 	byte v;
-	ParameterValuePair (int p, byte v) {
+
+	ParameterValuePair(int p, byte v) {
 		this.p = p;
 		this.v = v;
 	}
@@ -420,9 +445,11 @@ class ParameterValuePairComparator implements Comparator<ParameterValuePair> {
 	@Override
 	public int compare(ParameterValuePair o1, ParameterValuePair o2) {
 		// TODO Auto-generated method stub
-		if (o1.p < o2.p) return -1;
-		if (o1.p > o2.p) return 1;
+		if (o1.p < o2.p)
+			return -1;
+		if (o1.p > o2.p)
+			return 1;
 		return 0;
 	}
-	
+
 }

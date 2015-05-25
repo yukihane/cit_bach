@@ -5,10 +5,11 @@ import java.util.List;
 public class TokenHandler {
 	final List<String> tokenList;
 	int index = 0;
-	
+
 	TokenHandler(List<String> tokenList) {
 		this.tokenList = tokenList;
 	}
+
 	// 次のToken を取り出す
 	String getToken() throws OutOfTokenStreamException {
 		if (index >= tokenList.size())
@@ -16,14 +17,16 @@ public class TokenHandler {
 		String str = tokenList.get(index++);
 		return str;
 	}
+
 	// 次のToken を見る．取り出さない
-	String peepToken()  {
+	String peepToken() {
 		if (index >= tokenList.size())
 			return null;
 		return tokenList.get(index);
 	}
+
 	// 次の次のToken を見る．取り出さない
-	String peepNextToken()  {
+	String peepNextToken() {
 		if (index + 1 >= tokenList.size())
 			return null;
 		return tokenList.get(index + 1);
