@@ -1,17 +1,34 @@
 package v1;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
+
+class NodeAndConstrainedParameters {
+	Node node;
+	TreeSet<Integer> constrainedParameters;
+}
 
 public class Parse {
 	private TokenHandler t;
 	private PList parameterList;
 
+	private TreeSet<Integer> constrainedParameters = new TreeSet<Integer>();
+	
 	Parse(TokenHandler t, PList parameterList) {
 		this.t = t;
 		this.parameterList = parameterList;
+		
+		// extension to ..
+		this.constrainedParameters = new TreeSet<Integer>();
 	}
 
+	public NodeAndConstrainedParameters extendedParseExpression() {
+		NodeAndConstrainedParameters res = new NodeAndConstrainedParameters();
+		res.node = parseExpression();
+		res.constrainedParameters = this.constrainedParameters;
+		return res;
+	}
+	
 	public Node parseExpression() {
 		String nextToken = t.peepToken();
 		try {
@@ -19,8 +36,11 @@ public class Parse {
 				Error.printError(Main.language == Main.Language.JP ? "制約式に誤りがあります"
 						: "Invalid constraints");
 				return null;
-			} else if (nextToken.equals("("))
+			}
+			else if (nextToken.equals("(")) {
+				// debug: System.err.println(this.constrainedParameters.toString());
 				return expressionWithParentheses();
+			}
 			else {
 				// error
 				Error.printError(Main.language == Main.Language.JP ? "制約に'('がありません"
@@ -178,19 +198,29 @@ public class Parse {
 		else if (token.equals("<>"))
 			return inequalityAtomExpression();
 		else if (token.equals("==="))
-			return artithmeticEqualityAtomExpression(new EqualTo(), new EqualTo());
+			return arithmeticEqualityAtomExpression(new EqualTo(), new EqualTo());
+		else if (token.equals("!=="))
+			return artithmeticInequalityAtomExpression(new EqualTo(), new EqualTo());
 		else if (token.equals("<"))
-			return artithmeticEqualityAtomExpression(new LessThan(), new GreaterThan());
+			return arithmeticEqualityAtomExpression(new LessThan(), new GreaterThan());
 		else if (token.equals(">"))
-			return artithmeticEqualityAtomExpression(new GreaterThan(), new LessThan());
+			return arithmeticEqualityAtomExpression(new GreaterThan(), new LessThan());
 		else if (token.equals("<="))
-			return artithmeticEqualityAtomExpression(new LTE(), new GTE());
+			return arithmeticEqualityAtomExpression(new LTE(), new GTE());
 		else if (token.equals(">="))
-			return artithmeticEqualityAtomExpression(new GTE(), new LTE());
+			return arithmeticEqualityAtomExpression(new GTE(), new LTE());
 		else
 			Error.printError(Main.language == Main.Language.JP ? "制約式に == か <> が必要です"
 					: "== or <> expected in constraints");
 		return null;
+	}
+
+	private Node artithmeticInequalityAtomExpression(RelationOverDoublePair com1,
+			RelationOverDoublePair com2) throws OutOfTokenStreamException {
+		// TODO Auto-generated method stub
+		BooleanUnaryOperator res = new NotOperator();
+		res.Child = arithmeticEqualityAtomExpression(com1, com2);
+		return res;
 	}
 
 	private Node inequalityAtomExpression() throws OutOfTokenStreamException {
@@ -199,7 +229,7 @@ public class Parse {
 		return res;
 	}
 
-	private Node artithmeticEqualityAtomExpression(RelationOverDoublePair com1, RelationOverDoublePair com2)
+	private Node arithmeticEqualityAtomExpression(RelationOverDoublePair com1, RelationOverDoublePair com2)
 			throws OutOfTokenStreamException {
 		// case 1 val1 val2        com1
 		// case 2 val1 [para1]     com2
@@ -353,6 +383,7 @@ public class Parse {
 		// 因子名が正しいかチェック
 		try {
 			parameterID = parameterList.getID(para);
+			this.constrainedParameters.add(parameterID);
 		} catch (NoParameterNameException e) {
 			Error.printError(Main.language == Main.Language.JP ? "制約中の因子名に誤りがあります"
 					: "Invalid parameter name in constraints");
@@ -396,6 +427,7 @@ public class Parse {
 		// 因子名が正しいかチェック
 		try {
 			parameterID = parameterList.getID(para);
+			this.constrainedParameters.add(parameterID);
 		} catch (NoParameterNameException e) {
 			Error.printError(Main.language == Main.Language.JP ? "制約中の因子名に誤りがあります"
 					: "Invalid parameter name in constraints");
@@ -447,6 +479,8 @@ public class Parse {
 		try {
 			parameterID1 = parameterList.getID(para1);
 			parameterID2 = parameterList.getID(para2);
+			this.constrainedParameters.add(parameterID1);
+			this.constrainedParameters.add(parameterID2);
 		} catch (NoParameterNameException e) {
 			Error.printError(Main.language == Main.Language.JP ? "制約中の因子名に誤りがあります"
 					: "Invalid parameter name in constraints");
@@ -523,6 +557,8 @@ public class Parse {
 		try {
 			parameterID1 = parameterList.getID(para1);
 			parameterID2 = parameterList.getID(para2);
+			this.constrainedParameters.add(parameterID1);
+			this.constrainedParameters.add(parameterID2);
 		} catch (NoParameterNameException e) {
 			Error.printError(Main.language == Main.Language.JP ? "制約中の因子名に誤りがあります"
 					: "Invalid parameter name in constraints");

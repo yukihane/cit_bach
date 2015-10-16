@@ -224,8 +224,10 @@ public class Inputer {
 			if (t.peepToken() == null) {
 				break;
 			}
-			Node n = new Parse(t, parameterList).parseExpression();
-			constraintList.add(n);
+			//Node n = new Parse(t, parameterList).parseExpression();
+			NodeAndConstrainedParameters res = new Parse(t, parameterList).extendedParseExpression();
+			constraintList.add(res.node);
+			System.err.println(res.constrainedParameters.toString());
 		}
 		return constraintList;
 	}
