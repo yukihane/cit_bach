@@ -49,6 +49,36 @@ public class Parameter {
 			return ids;
 	}
 
+	// number‚ÆZp“I‚É“¯‚¶…€‚Ìid‚ğ‚Æ‚è‚¾‚·¨‚Â‚©‚Á‚Ä‚È‚¢
+	List<Integer> getID(double number) {
+		List<Integer> ids = new ArrayList<Integer>();
+		for (int i = 0; i < value_name.size(); i++) {
+			double level;
+			try {
+				level = Double.parseDouble(value_name.get(i));
+				if (level == number)
+					ids.add(i);
+			} catch (NumberFormatException e) {}
+		}
+		return ids;
+	}
+	
+	// number‚ÆZp“I‚ÉŠÖŒW‚Ì‚ ‚é…€‚Ìid‚ğ‚Æ‚è‚¾‚·
+	// level ` number
+	List<Integer> getID(double number, RelationOverDoublePair com) {
+		List<Integer> ids = new ArrayList<Integer>();
+		for (int i = 0; i < value_name.size(); i++) {
+			double level;
+			try {
+				level = Double.parseDouble(value_name.get(i));
+				if (com.hasRelation(level, number))
+					ids.add(i);
+			} catch (NumberFormatException e) {}
+		}
+		return ids;
+	}
+
+	
 }
 
 class PList extends LinkedList<Parameter> {

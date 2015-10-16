@@ -17,7 +17,7 @@ class ConstraintHandler {
 
 	ConstraintHandler(PList parameterList, List<Node> constraintList) {
 		bdd = new BDD(sizeOfNodetable, sizeOfCache);
-		// bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
+		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
 
 		// parameterのリスト
 		parameters = setBDDforParameter(parameterList);
@@ -142,6 +142,49 @@ class ConstraintHandler {
 		return f;
 	}
 
+	
+	private int setBddConstraintNewBuggy(List<Node> constraintList) {
+		int f = bdd.getOne();
+		bdd.ref(f);
+
+		// 制約式の論理積をとる
+		for (Node n : constraintList) {
+			int g = n.evaluate(bdd, parameters);
+			int tmp = bdd.ref(bdd.and(f, g));
+			bdd.deref(f);
+			bdd.deref(g);
+			f = tmp;
+		}
+
+		// パラメータでつかわない領域をfalseにする
+		int fordebug = 0;
+		for (VariableAndBDD vb : parameters) {
+			int cube = vb.var[0];
+			bdd.ref(cube);
+			for (int i = 1; i < vb.var.length; i++) {
+				int tmp = bdd.ref(bdd.and(cube, vb.var[i]));
+				bdd.deref(cube);
+				cube = tmp;
+			}
+			int tmp = bdd.ref(bdd.exists(f, cube));
+			// 制約に関係する場合のみ
+			if (tmp != f) {
+				fordebug++;
+				int tmp1 = bdd.ref(bdd.and(f, vb.constraint));
+				bdd.deref(f);
+				f = tmp1;
+			}
+			bdd.deref(cube);
+			bdd.deref(tmp);
+		}
+		System.out.println(fordebug);
+		// *を付加
+		f = extendBddConstraint(f);
+
+		return f;
+	}
+
+	
 	private int extendBddConstraint(int constraint) {
 		int f = constraint;
 		for (VariableAndBDD p : parameters) {
