@@ -1,6 +1,7 @@
 package v1;
 
 import java.util.List;
+import java.util.TreeSet;
 
 public class Main {
 	static int randomSeed = -1;
@@ -39,18 +40,25 @@ public class Main {
 			if (errorMessage != null)
 				Error.printError(errorMessage);
 
+			System.err.println("starting reading model");
 			// モデル読み込み
 			InputFileData inputfiledata = Inputer.readModel(modelFile);
 
+			System.err.println("starting building bdd");
 			// 制約処理 BDD作成
+// old version where all parameters are considered in BDD
+			//			ConstraintHandler conhndl = new ConstraintHandler(
+//					inputfiledata.parameterList, inputfiledata.constraintList);
+			// newer version
 			ConstraintHandler conhndl = new ConstraintHandler(
-					inputfiledata.parameterList, inputfiledata.constraintList);
+					inputfiledata.parameterList, inputfiledata.constraintList, inputfiledata.constrainedParameters);
 			// DEBUG: BDDの表示
 			/* conhndl.printConstraintBDD(); */
 
 			// 　シード読み込み
 			List<Testcase> seed = Inputer.readSeed(seedFile, inputfiledata);
 
+			System.err.println("starting test suite construction");
 			// テストケース生成
 			List<Testcase> testSet = null;
 			if (strength == -1) {
@@ -260,11 +268,13 @@ class InputFileData {
 	PList parameterList;
 	GList groupList;
 	List<Node> constraintList;
+	TreeSet<Integer> constrainedParameters;
 
 	InputFileData(PList parameterList, GList groupList,
-			List<Node> constraintList) {
+			List<Node> constraintList, TreeSet<Integer> constrainedParameters) {
 		this.parameterList = parameterList;
 		this.groupList = groupList;
 		this.constraintList = constraintList;
+		this.constrainedParameters = constrainedParameters;
 	}
 }

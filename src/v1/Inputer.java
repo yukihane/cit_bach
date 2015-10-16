@@ -206,8 +206,10 @@ public class Inputer {
 		 */
 
 		// 制約
-		List<Node> constraintList = readConstraint(t, parameterList);
-
+		
+		// List<Node> constraintList = readConstraint(t, parameterList);
+		ConstraintListAndConstrainedParameters constraints = readConstraint(t, parameterList);
+		
 		// close
 		try {
 			reader.close();
@@ -215,11 +217,13 @@ public class Inputer {
 			Error.printError(Main.language == Main.Language.JP ? "入力ファイルにアクセスできません"
 					: "Cannot access the input file");
 		}
-		return new InputFileData(parameterList, groupList, constraintList);
+//		return new InputFileData(parameterList, groupList, constraintList);
+		return new InputFileData(parameterList, groupList, constraints.constraintList, constraints.constrainedParameters);
 	}
 
-	private static List<Node> readConstraint(TokenHandler t, PList parameterList) {
+	private static ConstraintListAndConstrainedParameters readConstraint(TokenHandler t, PList parameterList) {
 		List<Node> constraintList = new ArrayList<Node>();
+		TreeSet<Integer> constrainedParameters = new TreeSet<Integer>();
 		while (true) {
 			if (t.peepToken() == null) {
 				break;
@@ -227,9 +231,9 @@ public class Inputer {
 			//Node n = new Parse(t, parameterList).parseExpression();
 			NodeAndConstrainedParameters res = new Parse(t, parameterList).extendedParseExpression();
 			constraintList.add(res.node);
-			System.err.println(res.constrainedParameters.toString());
+			constrainedParameters.addAll(res.constrainedParameters);
 		}
-		return constraintList;
+		return new ConstraintListAndConstrainedParameters(constraintList, constrainedParameters);
 	}
 
 	// グループの読み込み
@@ -420,3 +424,13 @@ public class Inputer {
 	}
 
 }
+
+class ConstraintListAndConstrainedParameters {
+	List<Node> constraintList;
+	TreeSet<Integer> constrainedParameters;
+	ConstraintListAndConstrainedParameters (List<Node> constraintList, TreeSet<Integer> constrainedParameters) {
+		this.constraintList = constraintList;
+		this.constrainedParameters = constrainedParameters;
+	}
+}
+

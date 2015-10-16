@@ -1,10 +1,10 @@
 package v1;
 
-import jdd.bdd.BDD;
 import jdd.bdd.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 class ConstraintHandler {
 	static final int sizeOfNodetable = 10000;
@@ -14,10 +14,12 @@ class ConstraintHandler {
 	BDD bdd;
 	int bddConstraint;
 	int numOfBDDvariables;
-
+	TreeSet<Integer> constrainedParameters; 
+	
+	// older one 
 	ConstraintHandler(PList parameterList, List<Node> constraintList) {
 		bdd = new BDD(sizeOfNodetable, sizeOfCache);
-		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
+//		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
 
 		// parameterのリスト
 		parameters = setBDDforParameter(parameterList);
@@ -29,6 +31,24 @@ class ConstraintHandler {
 		// numOfBooleanVariable = computeNumOfBooleanVariables
 	}
 
+	
+	// With constrainedParameters BDD is reduced by excluding irrelevant parameters
+	ConstraintHandler(PList parameterList, List<Node> constraintList, TreeSet<Integer> constrainedParameters) {
+		bdd = new BDD(sizeOfNodetable, sizeOfCache);
+//		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
+
+		this.constrainedParameters = constrainedParameters;
+
+		// parameterのリスト
+		parameters = setBDDforParameter(parameterList);
+
+		// contrainListから、ノードを呼ぶ
+		bddConstraint = setBddConstraint(constraintList);
+
+		// boolean 変数の総数を計算
+		// numOfBooleanVariable = computeNumOfBooleanVariables
+	}
+	
 	void printConstraintBDD() {
 		bdd.printSet(bddConstraint);
 	}
