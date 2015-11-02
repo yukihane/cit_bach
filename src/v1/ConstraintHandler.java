@@ -40,7 +40,11 @@ class ConstraintHandler {
 		this.constrainedParameters = constrainedParameters;
 
 		// parameterのリスト
-		parameters = setBDDforParameter(parameterList);
+		PList constrainedParameterList = new PList();
+		for (Integer factor: constrainedParameters) {
+			constrainedParameterList.add(parameterList.get(factor));
+		}
+		parameters = setBDDforParameter(constrainedParameterList);
 
 		// contrainListから、ノードを呼ぶ
 		bddConstraint = setBddConstraint(constraintList);
@@ -140,7 +144,7 @@ class ConstraintHandler {
 		int f = bdd.getOne();
 		bdd.ref(f);
 
-		// パラメータでつかわない領域をfalseにする
+		// パラメータでつかわない値をとった場合にfalseとなるようにする
 		for (VariableAndBDD vb : parameters) {
 			int tmp = bdd.ref(bdd.and(f, vb.constraint));
 			bdd.deref(f);
@@ -148,8 +152,8 @@ class ConstraintHandler {
 		}
 
 		// 制約式の論理積をとる
-		for (Node n : constraintList) {
-			int g = n.evaluate(bdd, parameters);
+		for (Node n : constraintList) {		
+			int g = n.evaluate(bdd, parameters, constrainedParameters);
 			int tmp = bdd.ref(bdd.and(f, g));
 			bdd.deref(f);
 			bdd.deref(g);
@@ -162,49 +166,7 @@ class ConstraintHandler {
 		return f;
 	}
 
-	
-	private int setBddConstraintNewBuggy(List<Node> constraintList) {
-		int f = bdd.getOne();
-		bdd.ref(f);
-
-		// 制約式の論理積をとる
-		for (Node n : constraintList) {
-			int g = n.evaluate(bdd, parameters);
-			int tmp = bdd.ref(bdd.and(f, g));
-			bdd.deref(f);
-			bdd.deref(g);
-			f = tmp;
-		}
-
-		// パラメータでつかわない領域をfalseにする
-		int fordebug = 0;
-		for (VariableAndBDD vb : parameters) {
-			int cube = vb.var[0];
-			bdd.ref(cube);
-			for (int i = 1; i < vb.var.length; i++) {
-				int tmp = bdd.ref(bdd.and(cube, vb.var[i]));
-				bdd.deref(cube);
-				cube = tmp;
-			}
-			int tmp = bdd.ref(bdd.exists(f, cube));
-			// 制約に関係する場合のみ
-			if (tmp != f) {
-				fordebug++;
-				int tmp1 = bdd.ref(bdd.and(f, vb.constraint));
-				bdd.deref(f);
-				f = tmp1;
-			}
-			bdd.deref(cube);
-			bdd.deref(tmp);
-		}
-		System.out.println(fordebug);
-		// *を付加
-		f = extendBddConstraint(f);
-
-		return f;
-	}
-
-	
+		
 	private int extendBddConstraint(int constraint) {
 		int f = constraint;
 		for (VariableAndBDD p : parameters) {
@@ -229,7 +191,7 @@ class ConstraintHandler {
 	}
 
 	// テストケースが制約を満たすか
-	boolean isPossible(Testcase test) {
+	boolean isPossibleOld(Testcase test) {
 		int node = bddConstraint;
 		boolean[] bv = binarize(test);
 
@@ -248,6 +210,25 @@ class ConstraintHandler {
 		}
 	}
 
+	boolean isPossible(Testcase test) {
+		int node = bddConstraint;
+		boolean[] bv = binarizeReduced(test);
+
+		while (true) {
+			// 恒真，恒偽
+			if (node == 0)
+				return false;
+			else if (node == 1)
+				return true;
+
+			// このposの0, 1はノードなし
+			if (bv[bdd.getVar(node)] == true)
+				node = bdd.getHigh(node);
+			else
+				node = bdd.getLow(node);
+		}
+	}
+	
 	private boolean[] binarize(Testcase test) {
 		// assert(testcaseの長さ = parameterの数)
 		boolean[] res = new boolean[numOfBDDvariables];
@@ -271,10 +252,49 @@ class ConstraintHandler {
 			}
 			pos += p.var.length;
 		}
-		/*
-		 * this.print(); for (int k = 0; k < res.length; k++)
-		 * System.out.print(res[k] ? 1 : 0); System.out.println("<-");
+		
+		/* for debug
+		 for (int k = 0; k < res.length; k++)
+		 System.err.print(res[k] ? 1 : 0); System.err.println("<-");
 		 */
+		
+		return res;
+	}
+	
+	// TreeSet<Integer> constrainedParameters にあるparameterだけを2値化
+	private boolean[] binarizeReduced(Testcase test) {
+		boolean[] res = new boolean[numOfBDDvariables];
+		int pos = 0;
+		int i = 0;
+		for (Integer factor: constrainedParameters) {
+			// VariableAndBDD p = parameters.get(i); <- 
+			// parameters が relevantなものだけになれば，上記に変更
+			VariableAndBDD p = parameters.get(i);
+
+			int lv = test.get(factor);
+			if (lv < 0) {
+				for (int j = 0; j < p.var.length; j++) 
+					res[pos + j] = true;
+			} else {
+				int j0 = 0;
+				for (int j = p.var.length -1; j >=0; j--) {
+					if ((lv & (0x01 << j)) > 0) 
+						res[pos + j0] = true;
+					else
+						res[pos + j0] = false;
+					j0++;
+				}
+			}
+			pos += p.var.length;
+			i++;
+		}
+		
+		
+		/* for debug
+		 test.print(); for (int k = 0; k < res.length; k++)
+		 System.err.print(res[k] ? 1 : 0); System.err.println("<*");
+		 */
+		 
 		return res;
 	}
 }

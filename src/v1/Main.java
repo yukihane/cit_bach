@@ -40,15 +40,17 @@ public class Main {
 			if (errorMessage != null)
 				Error.printError(errorMessage);
 
-			System.err.println("starting reading model");
 			// モデル読み込み
+			// System.err.println("starting reading model");
 			InputFileData inputfiledata = Inputer.readModel(modelFile);
 
-			System.err.println("starting building bdd");
 			// 制約処理 BDD作成
-// old version where all parameters are considered in BDD
+			// System.err.println("starting building bdd");
+			
+			// old version where all parameters are considered in BDD
 			//			ConstraintHandler conhndl = new ConstraintHandler(
-//					inputfiledata.parameterList, inputfiledata.constraintList);
+			//					inputfiledata.parameterList, inputfiledata.constraintList);
+
 			// newer version
 			ConstraintHandler conhndl = new ConstraintHandler(
 					inputfiledata.parameterList, inputfiledata.constraintList, inputfiledata.constrainedParameters);
@@ -58,8 +60,8 @@ public class Main {
 			// 　シード読み込み
 			List<Testcase> seed = Inputer.readSeed(seedFile, inputfiledata);
 
-			System.err.println("starting test suite construction");
 			// テストケース生成
+			// System.err.println("starting test suite construction");
 			List<Testcase> testSet = null;
 			if (strength == -1) {
 				// 全網羅

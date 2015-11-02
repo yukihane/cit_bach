@@ -104,6 +104,24 @@ class PList extends LinkedList<Parameter> {
 		}
 		throw new NoParameterNameException();
 	}
+	
+	// useless?
+	int getRestrictedID(String str, TreeSet<Integer> RestrictedParameters) 
+		throws NoParameterNameException {
+		try {
+			int parameter = this.getID(str);
+			int num = 0;
+			for (Integer i: RestrictedParameters) {
+				if (i == parameter)
+					return num;
+				num++;
+			}
+		} catch (NoParameterNameException e) {
+			throw e;
+		}
+		// if the parameter is not a relevant one
+		throw new NoParameterNameException();
+	}
 }
 
 class NoParameterNameException extends Exception {

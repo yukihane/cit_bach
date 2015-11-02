@@ -3,7 +3,7 @@
 OS (Windows7 Windows7_64 Vista) 
 ƒƒ‚ƒŠ (4.0 2 1 8 8.0 NA)
 SDD (4  2.0 2)
-# CPU ( Corei7  Corei5 Atom )
+CPU ( Corei7  Corei5 Atom )
 Disk (SDD HDD)
 Disk2 (SDD HDD)
 
@@ -16,7 +16,7 @@ Disk2 (SDD HDD)
 
 (<> [ƒƒ‚ƒŠ] 4.0)
 (<> [SDD] 4)
-(if (and (=== [ƒƒ‚ƒŠ] 8) (== [Disk] HDD) ) (or (== Vista [OS]) (<> [OS] Windows7) (<> [Disk] [Disk2]) ))
+# (if (and (=== [ƒƒ‚ƒŠ] 8) (== [Disk] HDD) ) (or (== Vista [OS]) (<> [OS] Windows7) (<> [Disk] [Disk2]) ))
 
 #(ite (== [Disk] [Disk2]) (== [ƒƒ‚ƒŠ] 4) (<> [ƒƒ‚ƒŠ] 2))
 
