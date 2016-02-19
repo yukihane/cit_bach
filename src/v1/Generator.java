@@ -134,7 +134,7 @@ class Generator2 extends Generator {
 
 	// for regression testing  it should be reduced to 1
 	final int NumOfIterationForEachTest = 20;
-//	final int NumOfIterationForEachTest = 1;
+	// final int NumOfIterationForEachTest = 1;
 
 	Generator2(ParameterModel parametermodel, GList groupList,
 			ConstraintHandler constrainthandler, List<Testcase> seed,

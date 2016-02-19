@@ -42,17 +42,17 @@ public class Inputer {
 		while ((row = parseCSVRow(reader)) != null) {
 			// TODO debug
 			// debug
-			/*
-			 * System.out.print("seed:"); for (String str: row) {
-			 * System.out.print(str + "\t"); } System.out.println();
-			 */
+			/**
+			  System.out.print("seed:"); for (String str: row) {
+			  System.out.print(str + "\t"); } System.out.println();
+			 
 
-			/*
-			 * System.err.print(row.size() +": "); for (String str: row) {
-			 * System.err.print(str + ","); } System.err.println();
-			 */
+			
+			  System.err.print(row.size() +": "); for (String str: row) {
+			  System.err.print(str + ","); } System.err.println();
+			 
 
-			/*
+			
 			 * if (isValueConsistent(row, inputfiledata) == false) {
 			 * Error.printError("seedファイルの値の記述に誤りがあります"); return null; }
 			 */
@@ -142,15 +142,18 @@ public class Inputer {
 				// line = line.replaceAll("#", ",#,");
 				// #以降を消去
 				line = line.replaceAll("#.*", "");
+				
 				// ,から始まる場合，行頭にスペースを入れる
 				// line = line.replaceAll(",", " ,");
+				// ,の前後にスペースを入れる．2016/2/19以下を追加
+				line = line.replaceAll(",", " , ");
 				StringTokenizer st = new StringTokenizer(line, ",");
 				while (st.hasMoreTokens()) {
 					String token = st.nextToken();
 					token = token.trim();
 					// if (token.equals("#"))
 					// break;
-					token = token.trim();
+					// token = token.trim(); unnecessary
 					tokenList.add(token);
 				}
 			} catch (IOException e) {
