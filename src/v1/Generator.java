@@ -233,6 +233,8 @@ class Generator2 extends Generator {
 
 		boolean isSeedUsed = false;
 
+		// debug: System.err.print("seedrownum: " + seedrownum + "-> ");
+
 		// seedのコピー　制約を満たさなかったらエラー
 		if (seed.size() > 0 && seedrownum < seed.size()) {
 			isSeedUsed = true;
@@ -284,8 +286,12 @@ class Generator2 extends Generator {
 		res.numOfCoveredTuples = newtuples;
 		if (isSeedUsed) {
 			res.nextSeedRow = seedrownum + 1;
-		} else
+		} else {
 			res.nextSeedRow = seedrownum;
+		}
+		
+		// debug: System.err.println("next seed row:" + res.nextSeedRow);
+		
 		return res;
 	}
 
@@ -431,6 +437,9 @@ class Generator2 extends Generator {
 			for (int j = i + 1; j < numOfParameters; j++) {
 				if (tab.get(i, test.get(i), j, test.get(j)) == false) {
 					tab.set(i, test.get(i), j, test.get(j));
+					
+					// debug: System.err.println(i + ":" + test.get(i)+", " + j + ":" + test.get(j));
+					
 					numOfNewlyCoveredTuples++;
 				}
 			}

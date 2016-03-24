@@ -169,6 +169,7 @@ class ConstraintHandler {
 		
 	private int extendBddConstraint(int constraint) {
 		int f = constraint;
+
 		for (VariableAndBDD p : parameters) {
 			int cube = p.var[0];
 			bdd.ref(cube);
@@ -179,12 +180,13 @@ class ConstraintHandler {
 			}
 			int tmp0 = bdd.ref(bdd.exists(f, cube));
 			int tmp = bdd.ref(bdd.and(tmp0, cube));
-			int newf = bdd.ref(bdd.or(f, tmp));
-
-			bdd.deref(cube);
+			bdd.deref(cube);		
 			bdd.deref(tmp0);
+
+			int newf = bdd.ref(bdd.or(f, tmp));
 			bdd.deref(tmp);
 			bdd.deref(f);
+
 			f = newf;
 		}
 		return f;
@@ -288,7 +290,6 @@ class ConstraintHandler {
 			pos += p.var.length;
 			i++;
 		}
-		
 		
 		/* for debug
 		 test.print(); for (int k = 0; k < res.length; k++)
