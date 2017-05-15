@@ -3,6 +3,7 @@ package v1;
 import jdd.bdd.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -170,7 +171,14 @@ class ConstraintHandler {
 	private int extendBddConstraint(int constraint) {
 		int f = constraint;
 
+		int count = 0;
+		
+		long start = System.currentTimeMillis();
+		
+		Collections.reverse(parameters);
+
 		for (VariableAndBDD p : parameters) {
+	//		System.err.println(count++);
 			int cube = p.var[0];
 			bdd.ref(cube);
 			for (int i = 1; i < p.var.length; i++) {
@@ -189,6 +197,13 @@ class ConstraintHandler {
 
 			f = newf;
 		}
+		//
+		
+		Collections.reverse(parameters);
+	
+//		long end = System.currentTimeMillis();
+//		System.err.println((end - start)  + "ms");
+		
 		return f;
 	}
 

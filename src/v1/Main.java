@@ -14,7 +14,7 @@ public class Main {
 	static final int MAX_LEVEL = 63;
 
 	static final int MAX_ITERATIONS = 100000;
-	static final int MAX_STRENGTH = 5;
+	static final int MAX_STRENGTH = 5;	
 	static final int Max_RandomSeed = 65535;
 	// static final int Max_RandomSeed = 10;
 
@@ -29,6 +29,8 @@ public class Main {
 	// Start the whole process
 	public static void main(String[] args) {
 
+		long start = System.currentTimeMillis();
+		
 		try {
 			// コマンド引数処理
 			String errorMessage = processCommandArgument(args);
@@ -141,6 +143,9 @@ public class Main {
 			Error.printError(Main.language == Main.Language.JP ? "プログラムが異常終了しました．"
 					: "Abnormal termination");
 		}
+		
+//		long end = System.currentTimeMillis();
+//		System.err.println("time: " + (end - start) + "ms");
 	}
 
 	// コマンド引数処理
@@ -152,7 +157,7 @@ public class Main {
 		// policyの表示
 		if (args.length == 1 && args[0].equals("-policy")) {
 			System.out
-					.println("This software (CIT-BACH 1.02) is distributed under the zlib license.\n"
+					.println("This software (CIT-BACH 1.1) is distributed under the zlib license.\n"
 							+ "The software contains Java classes from JDD, a Java BDD library "
 							+ "developed by Arash Vahidi.\n"
 							+ "JDD is free software distributed under the zlib license.\n"
