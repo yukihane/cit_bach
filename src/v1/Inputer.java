@@ -182,7 +182,7 @@ public class Inputer {
 			return tokenList;
 	}
 
-	static InputFileData readModel(String filename) {
+	public static InputFileData readModel(String filename) {
 
 		BufferedReader reader = openFile(filename);
 		List<String> tokenList = makeTokenList(reader);

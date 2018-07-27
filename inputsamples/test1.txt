@@ -10,11 +10,11 @@ Disk2 (SDD HDD)
 {OS メモリ Disk}  {メモリ Disk CPU}
 
 # 制約(禁則)を列挙
-(if (and (== [メモリ] 8GB) (== [Disk] HDD) ) (or (== Vista [OS]) (<> [OS] Windows7) (<> [Disk] [Disk2]) ))
+# (if (and (== [メモリ] 8GB) (== [Disk] HDD) ) (or (== Vista [OS]) (<> [OS] Windows7) (<> [Disk] [Disk2]) ))
 
-(ite (== [Disk] [Disk2]) (== [メモリ] 4GB) (<> [メモリ] 2GB))
+# (ite (== [Disk] [Disk2]) (== [メモリ] 4GB) (<> [メモリ] 2GB))
 
-(and (not (and (<> [OS] Windows7_64) (== 8GB [メモリ]))) (or (<> [OS] [メモリ]) (<> 4GB [メモリ]) (== [Disk] [CPU] )))
+# (and (not (and (<> [OS] Windows7_64) (== 8GB [メモリ]))) (or (<> [OS] [メモリ]) (<> 4GB [メモリ]) (== [Disk] [CPU] )))
 
 # 単項演算子：not
 # ２項演算子：==，<>, if

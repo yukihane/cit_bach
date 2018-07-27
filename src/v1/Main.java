@@ -30,7 +30,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		long start = System.currentTimeMillis();
-		
+
 		try {
 			// コマンド引数処理
 			String errorMessage = processCommandArgument(args);
@@ -48,7 +48,7 @@ public class Main {
 
 			// 制約処理 BDD作成
 			// System.err.println("starting building bdd");
-			
+
 			// old version where all parameters are considered in BDD
 			//			ConstraintHandler conhndl = new ConstraintHandler(
 			//					inputfiledata.parameterList, inputfiledata.constraintList);
@@ -74,7 +74,7 @@ public class Main {
 					Error.printError(Main.language == Main.Language.JP ? "テストケース数が上限"
 							+ Generator.MaxNumOfTestcases + "を超えました"
 							: "The number of test cases exceeded the upper bound "
-									+ Generator.MaxNumOfTestcases);
+							+ Generator.MaxNumOfTestcases);
 				}
 
 				new Outputer(outputFile).outputResult(testSet, inputfiledata,
@@ -125,7 +125,7 @@ public class Main {
 					Error.printError(Main.language == Main.Language.JP ? "テストケース数が上限"
 							+ Generator.MaxNumOfTestcases + "を超えました"
 							: "The number of test cases exceeded the upper bound "
-									+ Generator.MaxNumOfTestcases);
+							+ Generator.MaxNumOfTestcases);
 
 				new Outputer(outputFile).outputResult(testSet, inputfiledata,
 						randomSeed, modelFile, seedFile, outputFile, strength,
@@ -143,9 +143,9 @@ public class Main {
 			Error.printError(Main.language == Main.Language.JP ? "プログラムが異常終了しました．"
 					: "Abnormal termination");
 		}
-		
-//		long end = System.currentTimeMillis();
-//		System.err.println("time: " + (end - start) + "ms");
+
+		//		long end = System.currentTimeMillis();
+		//		System.err.println("time: " + (end - start) + "ms");
 	}
 
 	// コマンド引数処理
@@ -157,30 +157,30 @@ public class Main {
 		// policyの表示
 		if (args.length == 1 && args[0].equals("-policy")) {
 			System.out
-					.println("This software (CIT-BACH 1.1) is distributed under the zlib license.\n"
-							+ "The software contains Java classes from JDD, a Java BDD library "
-							+ "developed by Arash Vahidi.\n"
-							+ "JDD is free software distributed under the zlib license.\n"
-							+ "\n"
-							+ "Copyright (c) 2015, Tatsuhiro Tsuchiya\n"
-							+ "This software is provided 'as-is', without any express or implied \n"
-							+ "warranty. In no event will the authors be held liable for any damages \n"
-							+ "arising from the use of this software. \n"
-							+ "\n"
-							+ "Permission is granted to anyone to use this software for any purpose, \n"
-							+ "including commercial applications, and to alter it and redistribute it \n"
-							+ "freely, subject to the following restrictions: \n"
-							+ " \n"
-							+ "   1. The origin of this software must not be misrepresented; you must not \n"
-							+ "   claim that you wrote the original software. If you use this software \n"
-							+ "   in a product, an acknowledgment in the product documentation would be \n"
-							+ "   appreciated but is not required. \n"
-							+ "   \n"
-							+ "   2. Altered source versions must be plainly marked as such, and must not be \n"
-							+ "   misrepresented as being the original software. \n"
-							+ "   \n"
-							+ "   3. This notice may not be removed or altered from any source \n"
-							+ "   distribution. \n");
+			.println("This software (CIT-BACH 1.1) is distributed under the zlib license.\n"
+					+ "The software contains Java classes from JDD, a Java BDD library "
+					+ "developed by Arash Vahidi.\n"
+					+ "JDD is free software distributed under the zlib license.\n"
+					+ "\n"
+					+ "Copyright (c) 2015, Tatsuhiro Tsuchiya\n"
+					+ "This software is provided 'as-is', without any express or implied \n"
+					+ "warranty. In no event will the authors be held liable for any damages \n"
+					+ "arising from the use of this software. \n"
+					+ "\n"
+					+ "Permission is granted to anyone to use this software for any purpose, \n"
+					+ "including commercial applications, and to alter it and redistribute it \n"
+					+ "freely, subject to the following restrictions: \n"
+					+ " \n"
+					+ "   1. The origin of this software must not be misrepresented; you must not \n"
+					+ "   claim that you wrote the original software. If you use this software \n"
+					+ "   in a product, an acknowledgment in the product documentation would be \n"
+					+ "   appreciated but is not required. \n"
+					+ "   \n"
+					+ "   2. Altered source versions must be plainly marked as such, and must not be \n"
+					+ "   misrepresented as being the original software. \n"
+					+ "   \n"
+					+ "   3. This notice may not be removed or altered from any source \n"
+					+ "   distribution. \n");
 			System.exit(0);
 		}
 
@@ -271,17 +271,3 @@ public class Main {
 	}
 }
 
-class InputFileData {
-	PList parameterList;
-	GList groupList;
-	List<Node> constraintList;
-	TreeSet<Integer> constrainedParameters;
-
-	InputFileData(PList parameterList, GList groupList,
-			List<Node> constraintList, TreeSet<Integer> constrainedParameters) {
-		this.parameterList = parameterList;
-		this.groupList = groupList;
-		this.constraintList = constraintList;
-		this.constrainedParameters = constrainedParameters;
-	}
-}

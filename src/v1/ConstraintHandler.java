@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
 
-class ConstraintHandler {
+public class ConstraintHandler {
 	static final int sizeOfNodetable = 10000;
 	static final int sizeOfCache = 10000;
 
@@ -34,7 +34,7 @@ class ConstraintHandler {
 
 	
 	// With constrainedParameters BDD is reduced by excluding irrelevant parameters
-	ConstraintHandler(PList parameterList, List<Node> constraintList, TreeSet<Integer> constrainedParameters) {
+	public ConstraintHandler(PList parameterList, List<Node> constraintList, TreeSet<Integer> constrainedParameters) {
 		bdd = new BDD(sizeOfNodetable, sizeOfCache);
 //		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
 
@@ -227,7 +227,7 @@ class ConstraintHandler {
 		}
 	}
 
-	boolean isPossible(Testcase test) {
+	public boolean isPossible(Testcase test) {
 		int node = bddConstraint;
 		boolean[] bv = binarizeReduced(test);
 
