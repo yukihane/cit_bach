@@ -211,7 +211,7 @@ public class Main {
 	//								"[" + j + ", " + v2 + "]]");
 							String para1 = inputfiledata.parameterList.get(i).name;
 							String str1 = inputfiledata.parameterList.get(i).value_name.get(v1);
-							String para2 = inputfiledata.parameterList.get(i).name;
+							String para2 = inputfiledata.parameterList.get(j).name;
 							String str2 = inputfiledata.parameterList.get(j).value_name.get(v2);
 							System.out.println("[" + para1 + ", " + str1 + "]" + ", " +
 									"[" + para2 + ", " + str2 + "]");						
