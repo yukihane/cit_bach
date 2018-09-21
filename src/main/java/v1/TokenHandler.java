@@ -10,7 +10,7 @@ public class TokenHandler {
 		this.tokenList = tokenList;
 	}
 
-	// ŽŸ‚ÌToken ‚ðŽæ‚èo‚·
+	// æ¬¡ã®Token ã‚’å–ã‚Šå‡ºã™
 	String getToken() throws OutOfTokenStreamException {
 		if (index >= tokenList.size())
 			throw new OutOfTokenStreamException();
@@ -18,14 +18,14 @@ public class TokenHandler {
 		return str;
 	}
 
-	// ŽŸ‚ÌToken ‚ðŒ©‚éDŽæ‚èo‚³‚È‚¢
+	// æ¬¡ã®Token ã‚’è¦‹ã‚‹ï¼Žå–ã‚Šå‡ºã•ãªã„
 	String peepToken() {
 		if (index >= tokenList.size())
 			return null;
 		return tokenList.get(index);
 	}
 
-	// ŽŸ‚ÌŽŸ‚ÌToken ‚ðŒ©‚éDŽæ‚èo‚³‚È‚¢
+	// æ¬¡ã®æ¬¡ã®Token ã‚’è¦‹ã‚‹ï¼Žå–ã‚Šå‡ºã•ãªã„
 	String peepNextToken() {
 		if (index + 1 >= tokenList.size())
 			return null;

@@ -25,9 +25,9 @@ public class Outputer {
 			writer = new BufferedWriter(new FileWriter(filename));
 		} catch (IOException e) {
 			// System.err.print(filename + " cannot be created.");
-			// ƒGƒ‰[‚ğ‘‚«‚ß‚È‚¢‚Ì‚Å’¼Ú•W€ƒGƒ‰[‚Ö
-			System.err.print(Main.language == Main.Language.JP ? "o—Íƒtƒ@ƒCƒ‹"
-					+ filename + "‚ªì¬‚Å‚«‚Ü‚¹‚ñD" : "Cannot create output file "
+			// ã‚¨ãƒ©ãƒ¼ã‚’æ›¸ãè¾¼ã‚ãªã„ã®ã§ç›´æ¥æ¨™æº–ã‚¨ãƒ©ãƒ¼ã¸
+			System.err.print(Main.language == Main.Language.JP ? "å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«"
+					+ filename + "ãŒä½œæˆã§ãã¾ã›ã‚“ï¼" : "Cannot create output file "
 					+ filename);
 			System.exit(1);
 		}
@@ -64,7 +64,7 @@ public class Outputer {
 		}
 	}
 
-	// ‘S–Ô—…—p
+	// å…¨ç¶²ç¾…ç”¨
 	public void outputResult(List<Testcase> testSet,
 			InputFileData inputfiledata, String modelFile, String outputFile) {
 		// TODO Auto-generated method stub

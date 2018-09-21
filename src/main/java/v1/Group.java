@@ -33,7 +33,7 @@ class Group {
 	}
 }
 
-// TODO TreeSetにする→重複を削除
+// TODO TreeSet縺ｫ縺吶ｋ竊帝㍾隍�繧貞炎髯､
 class GList extends ArrayList<Group> {
 	private static final long serialVersionUID = -6705998890411938435L;
 
@@ -53,7 +53,7 @@ class MyComparator implements Comparator<Group> {
 			return -1;
 		}
 
-		// g0 と g1が同サイズ
+		// g0 縺ｨ g1縺悟酔繧ｵ繧､繧ｺ
 		for (int i = 0; i < g0.member.length; i++) {
 			if (g0.member[i] > g1.member[i])
 				return 1;

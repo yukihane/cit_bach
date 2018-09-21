@@ -14,19 +14,19 @@ public class Parameter {
 		value_name.add(name);
 	}
 
-	// ’l–¼‚Ìd•¡‚Ìƒ`ƒFƒbƒN@d•¡‚µ‚Ä‚¢‚ê‚ÎƒGƒ‰[
+	// å€¤åã®é‡è¤‡ã®ãƒã‚§ãƒƒã‚¯ã€€é‡è¤‡ã—ã¦ã„ã‚Œã°ã‚¨ãƒ©ãƒ¼
 	void check() {
 		if (value_name.size() <= 0 || value_name.size() > Main.MAX_LEVEL) {
-			Error.printError(Main.language == Main.Language.JP ? "…€”‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "æ°´æº–æ•°ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "Invalid number of values");
 		}
 
-		/* …€–¼‚Ìd•¡‚ğ‹Ö~-> comment out */
+		/* æ°´æº–åã®é‡è¤‡ã‚’ç¦æ­¢-> comment out */
 		/*
 		 * for (int i = 0; i < value_name.size() - 1; i++) { for (int j = i+1; j
 		 * < value_name.size(); j++) { if
 		 * (value_name.get(i).equals(value_name.get(j)))
-		 * Error.printError(Main.language == Main.Language.JP ? "…€–¼‚ªd•¡‚µ‚Ä‚¢‚Ü‚·" :
+		 * Error.printError(Main.language == Main.Language.JP ? "æ°´æº–åãŒé‡è¤‡ã—ã¦ã„ã¾ã™" :
 		 * "Overlap of parameter value name"); } }
 		 */
 	}
@@ -49,7 +49,7 @@ public class Parameter {
 			return ids;
 	}
 
-	// number‚ÆZp“I‚É“¯‚¶…€‚Ìid‚ğ‚Æ‚è‚¾‚·¨‚Â‚©‚Á‚Ä‚È‚¢
+	// numberã¨ç®—è¡“çš„ã«åŒã˜æ°´æº–ã®idã‚’ã¨ã‚Šã ã™â†’ã¤ã‹ã£ã¦ãªã„
 	List<Integer> getID(double number) {
 		List<Integer> ids = new ArrayList<Integer>();
 		for (int i = 0; i < value_name.size(); i++) {
@@ -63,8 +63,8 @@ public class Parameter {
 		return ids;
 	}
 	
-	// number‚ÆZp“I‚ÉŠÖŒW‚Ì‚ ‚é…€‚Ìid‚ğ‚Æ‚è‚¾‚·
-	// level ` number
+	// numberã¨ç®—è¡“çš„ã«é–¢ä¿‚ã®ã‚ã‚‹æ°´æº–ã®idã‚’ã¨ã‚Šã ã™
+	// level ï½ number
 	List<Integer> getID(double number, RelationOverDoublePair com) {
 		List<Integer> ids = new ArrayList<Integer>();
 		for (int i = 0; i < value_name.size(); i++) {

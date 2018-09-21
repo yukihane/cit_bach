@@ -13,8 +13,8 @@ import java.util.TreeSet;
 
 public class Inputer {
 
-	// @ƒV[ƒh‚Åw’è‚³‚ê‚½•”•ªƒeƒXƒg‚Ì—ñ‚ğ‚©‚¦‚·
-	// filename ‚ªnull‚È‚ç‘å‚«‚³0‚Ì—ñ‚ğ•Ô‚·
+	// ã€€ã‚·ãƒ¼ãƒ‰ã§æŒ‡å®šã•ã‚ŒãŸéƒ¨åˆ†ãƒ†ã‚¹ãƒˆã®åˆ—ã‚’ã‹ãˆã™
+	// filename ãŒnullãªã‚‰å¤§ãã•0ã®åˆ—ã‚’è¿”ã™
 	static List<Testcase> readSeed(String filename, InputFileData inputfiledata) {
 		List<Testcase> seed = new ArrayList<Testcase>();
 		if (filename == null)
@@ -29,12 +29,12 @@ public class Inputer {
 		 * System.out.print(str + "\t"); } System.out.println();
 		 */
 
-		// seed file ‚Í‹ó”’
+		// seed file ã¯ç©ºç™½
 		if (row == null)
 			return seed;
 		// parameters
 		if (isParameterConsistent(row, inputfiledata) == false) {
-			Error.printError(Main.language == Main.Language.JP ? "seedƒtƒ@ƒCƒ‹‚Ìˆöq‚Ì‹Lq‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "seedãƒ•ã‚¡ã‚¤ãƒ«ã®å› å­ã®è¨˜è¿°ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "There is an invalid parameter in the seeding file.");
 			return null;
 		}
@@ -54,14 +54,14 @@ public class Inputer {
 
 			
 			 * if (isValueConsistent(row, inputfiledata) == false) {
-			 * Error.printError("seedƒtƒ@ƒCƒ‹‚Ì’l‚Ì‹Lq‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"); return null; }
+			 * Error.printError("seedãƒ•ã‚¡ã‚¤ãƒ«ã®å€¤ã®è¨˜è¿°ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"); return null; }
 			 */
 
-			// Testcase ¶¬‚Æ’Ç‰Á
+			// Testcase ç”Ÿæˆã¨è¿½åŠ 
 			Testcase newtest = createTestcase(row, inputfiledata);
 
 			if (newtest == null) {
-				Error.printError(Main.language == Main.Language.JP ? "seedƒtƒ@ƒCƒ‹‚Ì’l‚Ì‹Lq‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+				Error.printError(Main.language == Main.Language.JP ? "seedãƒ•ã‚¡ã‚¤ãƒ«ã®å€¤ã®è¨˜è¿°ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 						: "There is an invalid parameter value in the seeding file.");
 				return null;
 			} else {
@@ -75,7 +75,7 @@ public class Inputer {
 		try {
 			reader.close();
 		} catch (IOException e) {
-			Error.printError(Main.language == Main.Language.JP ? "seedƒtƒ@ƒCƒ‹‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚¹‚ñ"
+			Error.printError(Main.language == Main.Language.JP ? "seedãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã›ã‚“"
 					: "Cannot access the seeding file.");
 		}
 
@@ -84,7 +84,7 @@ public class Inputer {
 
 	private static Testcase createTestcase(List<String> row,
 			InputFileData inputfiledata) {
-		// ’l‚ª³‚µ‚¢‚©H
+		// å€¤ãŒæ­£ã—ã„ã‹ï¼Ÿ
 		Testcase newtest = new Testcase(inputfiledata.parameterList.size());
 		int i = 0;
 		for (i = 0; i < Math
@@ -95,7 +95,7 @@ public class Inputer {
 				continue;
 			}
 			try {
-				// •¡”“¯‚¶’l‚ª‚ ‚ê‚ÎCÅ‰‚Ì‚à‚Ì‚Æ‚İ‚È‚·
+				// è¤‡æ•°åŒã˜å€¤ãŒã‚ã‚Œã°ï¼Œæœ€åˆã®ã‚‚ã®ã¨ã¿ãªã™
 				// newtest.set(i, (byte)
 				// inputfiledata.parameterList.get(i).getID(valuename));
 				newtest.set(i,
@@ -105,7 +105,7 @@ public class Inputer {
 				return null;
 			}
 		}
-		// s‚É‘Sƒpƒ‰ƒ[ƒ^•ª‚Ì’l‚ª‚È‚¯‚ê‚ÎC‹ó”’‚ğ“ü‚ê‚é
+		// è¡Œã«å…¨ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿åˆ†ã®å€¤ãŒãªã‘ã‚Œã°ï¼Œç©ºç™½ã‚’å…¥ã‚Œã‚‹
 		for (; i < inputfiledata.parameterList.size(); i++) {
 			newtest.setWildCard(i);
 		}
@@ -114,7 +114,7 @@ public class Inputer {
 
 	private static boolean isParameterConsistent(List<String> row,
 			InputFileData inputfiledata) {
-		// @ˆöq”‚Ìƒ`ƒFƒbƒN
+		// ã€€å› å­æ•°ã®ãƒã‚§ãƒƒã‚¯
 		if (inputfiledata.parameterList.size() != row.size())
 			return false;
 
@@ -138,14 +138,14 @@ public class Inputer {
 				if (line == null)
 					break;
 
-				// TODO ,‚Ì‘OŒã‚Ì‹ó”’‚Æ#‚Ì‘O‚Ì‹ó”’‚ğ‚Æ‚Á‚ÄA,‚ğƒZƒpƒŒ[ƒ^‚É
+				// TODO ,ã®å‰å¾Œã®ç©ºç™½ã¨#ã®å‰ã®ç©ºç™½ã‚’ã¨ã£ã¦ã€,ã‚’ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã«
 				// line = line.replaceAll("#", ",#,");
-				// #ˆÈ~‚ğÁ‹
+				// #ä»¥é™ã‚’æ¶ˆå»
 				line = line.replaceAll("#.*", "");
 				
-				// ,‚©‚çn‚Ü‚éê‡Cs“ª‚ÉƒXƒy[ƒX‚ğ“ü‚ê‚é
+				// ,ã‹ã‚‰å§‹ã¾ã‚‹å ´åˆï¼Œè¡Œé ­ã«ã‚¹ãƒšãƒ¼ã‚¹ã‚’å…¥ã‚Œã‚‹
 				// line = line.replaceAll(",", " ,");
-				// ,‚Ì‘OŒã‚ÉƒXƒy[ƒX‚ğ“ü‚ê‚éD2016/2/19ˆÈ‰º‚ğ’Ç‰Á
+				// ,ã®å‰å¾Œã«ã‚¹ãƒšãƒ¼ã‚¹ã‚’å…¥ã‚Œã‚‹ï¼2016/2/19ä»¥ä¸‹ã‚’è¿½åŠ 
 				line = line.replaceAll(",", " , ");
 				StringTokenizer st = new StringTokenizer(line, ",");
 				while (st.hasMoreTokens()) {
@@ -157,10 +157,10 @@ public class Inputer {
 					tokenList.add(token);
 				}
 			} catch (IOException e) {
-				Error.printError("IO@error");
+				Error.printError("IOã€€error");
 				return null;
 			}
-			// ‹ó”’‚¾‚¯CƒRƒƒ“ƒg‚¾‚¯‚È‚çŸ‚Ìs‚ğ‚æ‚Ş
+			// ç©ºç™½ã ã‘ï¼Œã‚³ãƒ¡ãƒ³ãƒˆã ã‘ãªã‚‰æ¬¡ã®è¡Œã‚’ã‚ˆã‚€
 			boolean isAllEmpty = true;
 			for (String token : tokenList) {
 				if (token.equals("") == false) {
@@ -188,27 +188,27 @@ public class Inputer {
 		List<String> tokenList = makeTokenList(reader);
 		TokenHandler t = new TokenHandler(tokenList);
 
-		// ˆöqA’l‚Ì‚æ‚İ‚±‚İ
+		// å› å­ã€å€¤ã®ã‚ˆã¿ã“ã¿
 		PList parameterList = readParameter(t);
 
-		// ƒeƒXƒg
+		// ãƒ†ã‚¹ãƒˆ
 		/*
 		 * for(Parameter p: parameterList) { System.err.print(p.name + ": ");
 		 * for (String name : p.value_name) { System.err.print(name + ", "); }
 		 * System.err.println(); }
 		 */
 
-		// ƒOƒ‹[ƒv
+		// ã‚°ãƒ«ãƒ¼ãƒ—
 		GList groupList = readGroup(t, parameterList);
 
-		// ƒeƒXƒg
+		// ãƒ†ã‚¹ãƒˆ
 
 		/*
 		 * for(Group g: groupList) { for (int i = 0; i < g.size; i++)
 		 * System.out.print(g.member[i] + ", "); System.out.println(); }
 		 */
 
-		// §–ñ
+		// åˆ¶ç´„
 		
 		// List<Node> constraintList = readConstraint(t, parameterList);
 		ConstraintListAndConstrainedParameters constraints = readConstraint(t, parameterList);
@@ -217,7 +217,7 @@ public class Inputer {
 		try {
 			reader.close();
 		} catch (IOException e) {
-			Error.printError(Main.language == Main.Language.JP ? "“ü—Íƒtƒ@ƒCƒ‹‚ÉƒAƒNƒZƒX‚Å‚«‚Ü‚¹‚ñ"
+			Error.printError(Main.language == Main.Language.JP ? "å…¥åŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã«ã‚¢ã‚¯ã‚»ã‚¹ã§ãã¾ã›ã‚“"
 					: "Cannot access the input file");
 		}
 //		return new InputFileData(parameterList, groupList, constraintList);
@@ -239,7 +239,7 @@ public class Inputer {
 		return new ConstraintListAndConstrainedParameters(constraintList, constrainedParameters);
 	}
 
-	// ƒOƒ‹[ƒv‚Ì“Ç‚İ‚İ
+	// ã‚°ãƒ«ãƒ¼ãƒ—ã®èª­ã¿è¾¼ã¿
 	private static GList readGroup(TokenHandler t, PList parameterList) {
 		GList groupList = new GList();
 		while (true) {
@@ -251,17 +251,17 @@ public class Inputer {
 					Error.printError("{ expected");
 				}
 			} catch (OutOfTokenStreamException e) {
-				Error.printError(Main.language == Main.Language.JP ? "ƒpƒ‰ƒ[ƒ^w’è‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+				Error.printError(Main.language == Main.Language.JP ? "ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æŒ‡å®šã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 						: "Invalid parameter");
 			}
-			// ƒOƒ‹[ƒv‚Ìƒpƒ‰ƒ[ƒ^
+			// ã‚°ãƒ«ãƒ¼ãƒ—ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 			Set<Integer> memberSet = new TreeSet<Integer>();
 			do {
 				String name = null;
 				try {
-					name = t.getToken(); // ƒ`ƒFƒbƒN‚µ‚Ä‚È‚¢
+					name = t.getToken(); // ãƒã‚§ãƒƒã‚¯ã—ã¦ãªã„
 				} catch (OutOfTokenStreamException e) {
-					Error.printError(Main.language == Main.Language.JP ? "ƒOƒ‹[ƒvw’è‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+					Error.printError(Main.language == Main.Language.JP ? "ã‚°ãƒ«ãƒ¼ãƒ—æŒ‡å®šã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 							: "Invalid grouping");
 				}
 				try {
@@ -271,28 +271,28 @@ public class Inputer {
 					 */
 					memberSet.add(Integer.valueOf(parameterList.getID(name)));
 				} catch (NoParameterNameException e) {
-					Error.printError(Main.language == Main.Language.JP ? "ƒOƒ‹[ƒvw’è‚Åˆöq–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+					Error.printError(Main.language == Main.Language.JP ? "ã‚°ãƒ«ãƒ¼ãƒ—æŒ‡å®šã§å› å­åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 							: "Invalid parameter in group");
 				}
 				if (t.peepToken() == null) {
-					Error.printError(Main.language == Main.Language.JP ? "ƒOƒ‹[ƒvw’è‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+					Error.printError(Main.language == Main.Language.JP ? "ã‚°ãƒ«ãƒ¼ãƒ—æŒ‡å®šã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 							: "Invalid grouping");
 				}
 			} while (t.peepToken().equals("}") == false);
 			Group g = new Group(memberSet);
 			groupList.add(g);
 
-			// } ‚Ì‚æ‚İ‚±‚İ
+			// } ã®ã‚ˆã¿ã“ã¿
 			try {
 				t.getToken();
 			} catch (OutOfTokenStreamException e) {
-				Error.printError(Main.language == Main.Language.JP ? "ƒOƒ‹[ƒvw’è‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+				Error.printError(Main.language == Main.Language.JP ? "ã‚°ãƒ«ãƒ¼ãƒ—æŒ‡å®šã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 						: "Invalid grouping");
 			}
 		}
-		// TODO group‚Ì®—ñ
+		// TODO groupã®æ•´åˆ—
 		groupList.sort();
-		// TODO d•¡—v‘f‚Ìíœ
+		// TODO é‡è¤‡è¦ç´ ã®å‰Šé™¤
 
 		return groupList;
 	}
@@ -307,8 +307,8 @@ public class Inputer {
 		try {
 			reader = new BufferedReader(new FileReader(filename));
 		} catch (FileNotFoundException e) {
-			Error.printError(Main.language == Main.Language.JP ? "ƒtƒ@ƒCƒ‹"
-					+ filename + "‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñD" : "Cannot find file " + filename);
+			Error.printError(Main.language == Main.Language.JP ? "ãƒ•ã‚¡ã‚¤ãƒ«"
+					+ filename + "ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ï¼" : "Cannot find file " + filename);
 		}
 		return reader;
 	}
@@ -347,7 +347,7 @@ public class Inputer {
 		return tokenList;
 	}
 
-	// ƒpƒ‰ƒ[ƒ^‚Ì“Ç‚İ‚İ
+	// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿
 	private static PList readParameter(TokenHandler t) {
 		PList parameterList = new PList();
 
@@ -358,47 +358,47 @@ public class Inputer {
 					break;
 				}
 
-				// ƒpƒ‰ƒ[ƒ^‚Ì–¼‘O
+				// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®åå‰
 				// parameter name. Should be non-null
 				String parameter_name = t.getToken();
 				checkParameterName(parameter_name);
 				Parameter p = new Parameter(parameter_name);
 
 				if (t.getToken().equals("(") == false) {
-					Error.printError(Main.language == Main.Language.JP ? "( ‚ª‚ ‚è‚Ü‚¹‚ñD"
+					Error.printError(Main.language == Main.Language.JP ? "( ãŒã‚ã‚Šã¾ã›ã‚“ï¼"
 							: "( expected");
 				}
-				// ƒŒƒxƒ‹‚Ì–¼‘O
+				// ãƒ¬ãƒ™ãƒ«ã®åå‰
 				do {
-					String level_name = t.getToken(); // ƒ`ƒFƒbƒN‚µ‚Ä‚È‚¢
+					String level_name = t.getToken(); // ãƒã‚§ãƒƒã‚¯ã—ã¦ãªã„
 					checkLevelName(level_name);
 					p.addName(level_name);
 					if (t.peepToken() == null) {
-						Error.printError(Main.language == Main.Language.JP ? "ƒpƒ‰ƒ[ƒ^w’è‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+						Error.printError(Main.language == Main.Language.JP ? "ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æŒ‡å®šã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 								: "Invalid parameters");
 					}
 				} while (t.peepToken().equals(")") == false);
-				// ) ‚Ì‚æ‚İ‚±‚İ
+				// ) ã®ã‚ˆã¿ã“ã¿
 				t.getToken();
 
-				// ’l–¼‚Ìd•¡ƒ`ƒFƒbƒN
+				// å€¤åã®é‡è¤‡ãƒã‚§ãƒƒã‚¯
 				p.check();
 
 				parameterList.add(p);
 			} catch (OutOfTokenStreamException e) {
-				Error.printError(Main.language == Main.Language.JP ? "ƒpƒ‰ƒ[ƒ^w’è‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+				Error.printError(Main.language == Main.Language.JP ? "ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿æŒ‡å®šã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 						: "Invalid parameters");
 			}
 		}
 
-		// @ˆöq–¼‚Ìd•¡ƒ`ƒFƒbƒN
+		// ã€€å› å­åã®é‡è¤‡ãƒã‚§ãƒƒã‚¯
 		if (parameterList.checkNameDuplication())
-			Error.printError(Main.language == Main.Language.JP ? "ˆöq–¼‚ªd•¡‚µ‚Ä‚¢‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "å› å­åãŒé‡è¤‡ã—ã¦ã„ã¾ã™"
 					: "Duplicated parameters");
 
-		// ˆöq” >= 2
+		// å› å­æ•° >= 2
 		if (parameterList.size() < 2)
-			Error.printError(Main.language == Main.Language.JP ? "ˆöq‚Í2ŒÂˆÈã•K—v‚Å‚·"
+			Error.printError(Main.language == Main.Language.JP ? "å› å­ã¯2å€‹ä»¥ä¸Šå¿…è¦ã§ã™"
 					: "Multiple parameters required");
 
 		return parameterList;
@@ -410,7 +410,7 @@ public class Inputer {
 				|| name.contains("}") || name.contains("[")
 				|| name.contains("]") || name.contains(";")
 				|| name.contains(",")) {
-			Error.printError(Main.language == Main.Language.JP ? "ˆöq–¼‚É‹Ö~•¶š‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "å› å­åã«ç¦æ­¢æ–‡å­—ãŒå«ã¾ã‚Œã¦ã„ã¾ã™"
 					: "Invalid symbol in parameter name");
 		}
 	}
@@ -421,7 +421,7 @@ public class Inputer {
 				|| name.contains("}") || name.contains("[")
 				|| name.contains("]") || name.contains(";")
 				|| name.contains(",")) {
-			Error.printError(Main.language == Main.Language.JP ? "…€–¼‚É‹Ö~•¶š‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "æ°´æº–åã«ç¦æ­¢æ–‡å­—ãŒå«ã¾ã‚Œã¦ã„ã¾ã™"
 					: "Invalid symbol in parameter value");
 		}
 	}

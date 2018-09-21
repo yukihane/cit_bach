@@ -280,7 +280,7 @@ class EqualityOfParameterAndValue extends ComparisonOfParameterAndValue {
 	int evaluate(BDD bdd, List<VariableAndBDD> parameters) {
 		int res = bdd.getOne();
 		bdd.ref(res);
-		// p‚Íiâ‘Î’l‚Åjƒpƒ‰ƒ[ƒ^‚Ì”Ô†‚ªŠù‚É‚Í‚¢‚Á‚Ä‚¢‚é
+		// pã¯ï¼ˆçµ¶å¯¾å€¤ã§ï¼‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ç•ªå·ãŒæ—¢ã«ã¯ã„ã£ã¦ã„ã‚‹
 		// 
 		int[] var = parameters.get(this.p).var;
 		for (int i = var.length - 1; i >= 0; i--) {
@@ -302,7 +302,7 @@ class EqualityOfParameterAndValue extends ComparisonOfParameterAndValue {
 	int evaluate(BDD bdd, List<VariableAndBDD> parameters, Set<Integer> restricted) {
 		int res = bdd.getOne();
 		bdd.ref(res);
-		// p‚Íiâ‘Î’l‚Åjƒpƒ‰ƒ[ƒ^‚Ì”Ô†‚ªŠù‚É‚Í‚¢‚Á‚Ä‚¢‚é
+		// pã¯ï¼ˆçµ¶å¯¾å€¤ã§ï¼‰ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ç•ªå·ãŒæ—¢ã«ã¯ã„ã£ã¦ã„ã‚‹
 		int num = 0;
 		for (Integer i: restricted) {
 			if (i == this.p) 

@@ -34,21 +34,21 @@ public class Main {
 		long start = System.currentTimeMillis();
 
 		try {
-			// ƒRƒ}ƒ“ƒhˆø”ˆ—
+			// ã‚³ãƒãƒ³ãƒ‰å¼•æ•°å‡¦ç†
 			String errorMessage = processCommandArgument(args);
 
-			// ƒGƒ‰[o—Íæİ’è
+			// ã‚¨ãƒ©ãƒ¼å‡ºåŠ›å…ˆè¨­å®š
 			Error.setOutputFile(outputFile);
 
-			// ƒRƒ}ƒ“ƒhˆø”‚Å‚ÌƒGƒ‰[o—Í
+			// ã‚³ãƒãƒ³ãƒ‰å¼•æ•°ã§ã®ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 			if (errorMessage != null)
 				Error.printError(errorMessage);
 
-			// ƒ‚ƒfƒ‹“Ç‚İ‚İ
+			// ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 			// System.err.println("starting reading model");
 			InputFileData inputfiledata = Inputer.readModel(modelFile);
 
-			// §–ñˆ— BDDì¬
+			// åˆ¶ç´„å‡¦ç† BDDä½œæˆ
 			ConstraintHandler conhndl = new ConstraintHandler(
 					inputfiledata.parameterList, inputfiledata.constraintList, inputfiledata.constrainedParameters);
 
@@ -58,10 +58,10 @@ public class Main {
 			checkAllTuples(parametermodel, conhndl, inputfiledata);
 			
 		} catch (OutOfMemoryError e) {
-			Error.printError(Main.language == Main.Language.JP ? "ƒƒ‚ƒŠ•s‘«‚Å‚·D"
+			Error.printError(Main.language == Main.Language.JP ? "ãƒ¡ãƒ¢ãƒªä¸è¶³ã§ã™ï¼"
 					: "Out of memory");
 		} catch (Exception e) {
-			Error.printError(Main.language == Main.Language.JP ? "ƒvƒƒOƒ‰ƒ€‚ªˆÙíI—¹‚µ‚Ü‚µ‚½D"
+			Error.printError(Main.language == Main.Language.JP ? "ãƒ—ãƒ­ã‚°ãƒ©ãƒ ãŒç•°å¸¸çµ‚äº†ã—ã¾ã—ãŸï¼"
 					: "Abnormal termination");
 		}
 
@@ -69,13 +69,13 @@ public class Main {
 		//		System.err.println("time: " + (end - start) + "ms");
 	}
 
-	// ƒRƒ}ƒ“ƒhˆø”ˆ—
+	// ã‚³ãƒãƒ³ãƒ‰å¼•æ•°å‡¦ç†
 	private static String processCommandArgument(String[] args) {
 		if (args.length == 0) {
 			Error.printError("usage: java -jar Program.jar [-i input] [-o output] [-policy] ...");
 		}
 
-		// policy‚Ì•\¦
+		// policyã®è¡¨ç¤º
 		if (args.length == 1 && args[0].equals("-policy")) {
 			System.out
 			.println("This software (CIT-BACH 1.1) is distributed under the zlib license.\n"
@@ -105,7 +105,7 @@ public class Main {
 			System.exit(0);
 		}
 
-		// ƒGƒ‰[•\¦‚ğo—Íƒtƒ@ƒCƒ‹‚ªw’è‚³‚ê‚é‚Ü‚Å’x‚ç‚¹‚é
+		// ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºã‚’å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ãŒæŒ‡å®šã•ã‚Œã‚‹ã¾ã§é…ã‚‰ã›ã‚‹
 		String errorMessage = null;
 
 		for (int i = 0; i + 1 < args.length; i += 2) {
@@ -120,45 +120,45 @@ public class Main {
 					randomSeed = Integer.parseInt(str);
 				} catch (NumberFormatException e) {
 					// Error.printError("invalid number");
-					errorMessage = Main.language == Main.Language.JP ? "ƒ‰ƒ“ƒ_ƒ€ƒV[ƒh‚É–³Œø‚È’l‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚·D"
+					errorMessage = Main.language == Main.Language.JP ? "ãƒ©ãƒ³ãƒ€ãƒ ã‚·ãƒ¼ãƒ‰ã«ç„¡åŠ¹ãªå€¤ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ï¼"
 							: "Invalid random seed";
 					continue;
 				}
 				randomSeed = Math.abs(randomSeed) % (Max_RandomSeed + 1);
 			} else if (option.equals("-c")) {
 				if (str.equals("all")) {
-					// ‘S–Ô—…
+					// å…¨ç¶²ç¾…
 					strength = -1;
 				} else {
 					try {
 						strength = Integer.parseInt(str);
 					} catch (NumberFormatException e) {
 						// Error.printError("invalid number");
-						errorMessage = Main.language == Main.Language.JP ? "–Ô—…“x‚É–³Œø‚È’l‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚·D"
+						errorMessage = Main.language == Main.Language.JP ? "ç¶²ç¾…åº¦ã«ç„¡åŠ¹ãªå€¤ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ï¼"
 								: "Invalid strength";
 						continue;
 					}
 					if (strength < 2 || MAX_STRENGTH < strength) {
 						// Error.printError("invalid strength");
-						errorMessage = Main.language == Main.Language.JP ? "–Ô—…“x‚É–³Œø‚È’l‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚·D"
+						errorMessage = Main.language == Main.Language.JP ? "ç¶²ç¾…åº¦ã«ç„¡åŠ¹ãªå€¤ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ï¼"
 								: "Invalid strength";
 						continue;
 					}
 				}
 			}
-			// ŒJ‚è•Ô‚µ”
+			// ç¹°ã‚Šè¿”ã—æ•°
 			else if (option.equals("-repeat")) {
 				try {
 					numOfIterations = Integer.parseInt(str);
 				} catch (NumberFormatException e) {
 					// Error.printError("invalid repeating number");
-					errorMessage = Main.language == Main.Language.JP ? "‚­‚è•Ô‚µ”‚É–³Œø‚È’l‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚·D"
+					errorMessage = Main.language == Main.Language.JP ? "ãã‚Šè¿”ã—æ•°ã«ç„¡åŠ¹ãªå€¤ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ï¼"
 							: "Invalid number of repetition times";
 					continue;
 				}
 				if (numOfIterations <= 0 || numOfIterations > MAX_ITERATIONS) {
 					// Error.printError("invalid repeating number");
-					errorMessage = Main.language == Main.Language.JP ? "‚­‚è•Ô‚µ”‚É–³Œø‚È’l‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚·D"
+					errorMessage = Main.language == Main.Language.JP ? "ãã‚Šè¿”ã—æ•°ã«ç„¡åŠ¹ãªå€¤ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ï¼"
 							: "Invalid number of repetition times";
 					continue;
 				}
@@ -166,19 +166,19 @@ public class Main {
 				seedFile = str;
 			} else if (option.equals("-debug")) {
 				debugMode = true;
-				// Ÿ‚Ìˆø”‚Íƒ_ƒ~[
+				// æ¬¡ã®å¼•æ•°ã¯ãƒ€ãƒŸãƒ¼
 			} else if (option.equals("-lang")) {
 				if (str.matches("JP|jp")) {
 					Main.language = Main.Language.JP;
 				} else if (str.matches("EN|en")) {
 					Main.language = Main.Language.EN;
 				} else {
-					errorMessage = "–³Œø‚ÈŒ¾Œê‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚· (Invalid Language)";
+					errorMessage = "ç„¡åŠ¹ãªè¨€èªãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ (Invalid Language)";
 					continue;
 				}
 			} else {
 				// Error.printError("Invalid option");
-				errorMessage = Main.language == Main.Language.JP ? "–³Œø‚ÈƒIƒvƒVƒ‡ƒ“‚ªw’è‚³‚ê‚Ä‚¢‚Ü‚·D"
+				errorMessage = Main.language == Main.Language.JP ? "ç„¡åŠ¹ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ï¼"
 						: "Invalid option";
 				continue;
 			}
@@ -199,13 +199,13 @@ public class Main {
 			for (int j = i + 1; j < numOfParameters; j++) {
 				for (byte v1 = 0; v1 < parametermodel.range[i]; v1++) {
 					for (byte v2 = 0; v2 < parametermodel.range[j]; v2++) {
-						// pair‚Ì¶¬
+						// pairã®ç”Ÿæˆ
 						Testcase pair = new Testcase(numOfParameters);
 						pair.quantify();
 						pair.set(i, v1);
 						pair.set(j, v2);
-						// pair‚Ìƒ`ƒFƒbƒN
-						// ‹Ö‘¥ˆá”½‚È‚çset
+						// pairã®ãƒã‚§ãƒƒã‚¯
+						// ç¦å‰‡é•åãªã‚‰set
 						if (conhndl.isPossible(pair) == false) {
 //							System.out.println("[" + i + ", " + v1 + "]" + ", " +
 	//								"[" + j + ", " + v2 + "]]");

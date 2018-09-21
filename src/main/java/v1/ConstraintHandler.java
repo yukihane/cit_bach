@@ -22,13 +22,13 @@ public class ConstraintHandler {
 		bdd = new BDD(sizeOfNodetable, sizeOfCache);
 //		bdd = new jdd.bdd.debug.DebugBDD(1000,1000);
 
-		// parameter‚ÌƒŠƒXƒg
+		// parameterã®ãƒªã‚¹ãƒˆ
 		parameters = setBDDforParameter(parameterList);
 
-		// contrainList‚©‚çAƒm[ƒh‚ğŒÄ‚Ô
+		// contrainListã‹ã‚‰ã€ãƒãƒ¼ãƒ‰ã‚’å‘¼ã¶
 		bddConstraint = setBddConstraint(constraintList);
 
-		// boolean •Ï”‚Ì‘”‚ğŒvZ
+		// boolean å¤‰æ•°ã®ç·æ•°ã‚’è¨ˆç®—
 		// numOfBooleanVariable = computeNumOfBooleanVariables
 	}
 
@@ -40,17 +40,17 @@ public class ConstraintHandler {
 
 		this.constrainedParameters = constrainedParameters;
 
-		// parameter‚ÌƒŠƒXƒg
+		// parameterã®ãƒªã‚¹ãƒˆ
 		PList constrainedParameterList = new PList();
 		for (Integer factor: constrainedParameters) {
 			constrainedParameterList.add(parameterList.get(factor));
 		}
 		parameters = setBDDforParameter(constrainedParameterList);
 
-		// contrainList‚©‚çAƒm[ƒh‚ğŒÄ‚Ô
+		// contrainListã‹ã‚‰ã€ãƒãƒ¼ãƒ‰ã‚’å‘¼ã¶
 		bddConstraint = setBddConstraint(constraintList);
 
-		// boolean •Ï”‚Ì‘”‚ğŒvZ
+		// boolean å¤‰æ•°ã®ç·æ•°ã‚’è¨ˆç®—
 		// numOfBooleanVariable = computeNumOfBooleanVariables
 	}
 	
@@ -58,39 +58,39 @@ public class ConstraintHandler {
 		bdd.printSet(bddConstraint);
 	}
 
-	// Šeƒpƒ‰ƒ[ƒ^‚Éboolean•Ï”‚ğŠ„‚è“–‚ÄD‘”‚àŒvZ
+	// å„ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«booleanå¤‰æ•°ã‚’å‰²ã‚Šå½“ã¦ï¼ç·æ•°ã‚‚è¨ˆç®—
 	private List<VariableAndBDD> setBDDforParameter(PList parameterList) {
 		List<VariableAndBDD> res = new ArrayList<VariableAndBDD>();
 		this.numOfBDDvariables = 0;
 
 		for (Parameter p : parameterList) {
-			// BDD•Ï”‚Ìİ’è
+			// BDDå¤‰æ•°ã®è¨­å®š
 			int num_vars = 1;
 			for (int levels = 2;; levels *= 2) {
 				if (p.value_name.size() < levels)
 					break;
 				num_vars++;
 			}
-			// BDD•Ï”‚Ì‘”‚ğŒvZ
+			// BDDå¤‰æ•°ã®ç·æ•°ã‚’è¨ˆç®—
 			numOfBDDvariables += num_vars;
 
 			// boolean variables
-			// ¶¬‚³‚ê‚½‡‚É getVar(v): 0, 1, 2, ..
+			// ç”Ÿæˆã•ã‚ŒãŸé †ã« getVar(v): 0, 1, 2, ..
 			int[] var = new int[num_vars];
 			for (int i = num_vars - 1; i >= 0; i--) {
 				var[i] = bdd.createVar();
 			}
 
-			// §–ñ‚ÌBDD‚Ìİ’è
+			// åˆ¶ç´„ã®BDDã®è¨­å®š
 			// constraint for invalid values
-			// domain-1ˆÈ‰º‚Ì”š‚Ì‚İ—LŒø
-			// bool variables ‚Ì”‚Ídomain-1‚ğ‚ ‚ç‚í‚¹‚é‚¾‚¯‚Í‚ ‚é
+			// domain-1ä»¥ä¸‹ã®æ•°å­—ã®ã¿æœ‰åŠ¹
+			// bool variables ã®æ•°ã¯domain-1ã‚’ã‚ã‚‰ã‚ã›ã‚‹ã ã‘ã¯ã‚ã‚‹
 			//
-			// domain-1‚Ì2i•\Œ»‚Å‚ÍCÅãˆÊ‚Ì•Ï”‚É‚ ‚½‚éƒrƒbƒg‚Íí‚É1
-			// ‚Æ‚ÍŒÀ‚ç‚È‚¢
+			// domain-1ã®2é€²è¡¨ç¾ã§ã¯ï¼Œæœ€ä¸Šä½ã®å¤‰æ•°ã«ã‚ãŸã‚‹ãƒ“ãƒƒãƒˆã¯å¸¸ã«1
+			// ã¨ã¯é™ã‚‰ãªã„
 			int f = bdd.getZero();
 			bdd.ref(f);
-			// domain-1‚æ‚è¬‚³‚¢”
+			// domain-1ã‚ˆã‚Šå°ã•ã„æ•°
 			for (int i = var.length - 1; i >= 0; i--) {
 				if ((p.value_name.size() - 1 & (0x01 << i)) > 0) {
 					int g = bdd.getOne();
@@ -115,7 +115,7 @@ public class ConstraintHandler {
 				}
 			}
 
-			// domain - 1©g
+			// domain - 1è‡ªèº«
 			int g = bdd.getOne();
 			bdd.ref(g);
 			for (int i = var.length - 1; i >= 0; i--) {
@@ -135,7 +135,7 @@ public class ConstraintHandler {
 			bdd.deref(f);
 			bdd.deref(g);
 
-			// var, d ‚ğ list‚É’Ç‰Á
+			// var, d ã‚’ listã«è¿½åŠ 
 			res.add(new VariableAndBDD(var, d));
 		}
 		return res;
@@ -145,14 +145,14 @@ public class ConstraintHandler {
 		int f = bdd.getOne();
 		bdd.ref(f);
 
-		// ƒpƒ‰ƒ[ƒ^‚Å‚Â‚©‚í‚È‚¢’l‚ğ‚Æ‚Á‚½ê‡‚Éfalse‚Æ‚È‚é‚æ‚¤‚É‚·‚é
+		// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã§ã¤ã‹ã‚ãªã„å€¤ã‚’ã¨ã£ãŸå ´åˆã«falseã¨ãªã‚‹ã‚ˆã†ã«ã™ã‚‹
 		for (VariableAndBDD vb : parameters) {
 			int tmp = bdd.ref(bdd.and(f, vb.constraint));
 			bdd.deref(f);
 			f = tmp;
 		}
 
-		// §–ñ®‚Ì˜_—Ï‚ğ‚Æ‚é
+		// åˆ¶ç´„å¼ã®è«–ç†ç©ã‚’ã¨ã‚‹
 		for (Node n : constraintList) {		
 			int g = n.evaluate(bdd, parameters, constrainedParameters);
 			int tmp = bdd.ref(bdd.and(f, g));
@@ -161,7 +161,7 @@ public class ConstraintHandler {
 			f = tmp;
 		}
 
-		// *‚ğ•t‰Á
+		// *ã‚’ä»˜åŠ 
 		f = extendBddConstraint(f);
 
 		return f;
@@ -207,19 +207,19 @@ public class ConstraintHandler {
 		return f;
 	}
 
-	// ƒeƒXƒgƒP[ƒX‚ª§–ñ‚ğ–‚½‚·‚©
+	// ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹ãŒåˆ¶ç´„ã‚’æº€ãŸã™ã‹
 	boolean isPossibleOld(Testcase test) {
 		int node = bddConstraint;
 		boolean[] bv = binarize(test);
 
 		while (true) {
-			// P^CP‹U
+			// æ’çœŸï¼Œæ’å½
 			if (node == 0)
 				return false;
 			else if (node == 1)
 				return true;
 
-			// ‚±‚Ìpos‚Ì0, 1‚Íƒm[ƒh‚È‚µ
+			// ã“ã®posã®0, 1ã¯ãƒãƒ¼ãƒ‰ãªã—
 			if (bv[bdd.getVar(node)] == true)
 				node = bdd.getHigh(node);
 			else
@@ -232,13 +232,13 @@ public class ConstraintHandler {
 		boolean[] bv = binarizeReduced(test);
 
 		while (true) {
-			// P^CP‹U
+			// æ’çœŸï¼Œæ’å½
 			if (node == 0)
 				return false;
 			else if (node == 1)
 				return true;
 
-			// ‚±‚Ìpos‚Ì0, 1‚Íƒm[ƒh‚È‚µ
+			// ã“ã®posã®0, 1ã¯ãƒãƒ¼ãƒ‰ãªã—
 			if (bv[bdd.getVar(node)] == true)
 				node = bdd.getHigh(node);
 			else
@@ -247,10 +247,10 @@ public class ConstraintHandler {
 	}
 	
 	private boolean[] binarize(Testcase test) {
-		// assert(testcase‚Ì’·‚³ = parameter‚Ì”)
+		// assert(testcaseã®é•·ã• = parameterã®æ•°)
 		boolean[] res = new boolean[numOfBDDvariables];
 		int pos = 0;
-		// Šeˆöq‚Ì’l‚ğ2’l‚Å•\Œ»
+		// å„å› å­ã®å€¤ã‚’2å€¤ã§è¡¨ç¾
 		for (int i = 0; i < test.value.length; i++) {
 			VariableAndBDD p = parameters.get(i);
 			int lv = test.get(i);
@@ -278,14 +278,14 @@ public class ConstraintHandler {
 		return res;
 	}
 	
-	// TreeSet<Integer> constrainedParameters ‚É‚ ‚éparameter‚¾‚¯‚ğ2’l‰»
+	// TreeSet<Integer> constrainedParameters ã«ã‚ã‚‹parameterã ã‘ã‚’2å€¤åŒ–
 	private boolean[] binarizeReduced(Testcase test) {
 		boolean[] res = new boolean[numOfBDDvariables];
 		int pos = 0;
 		int i = 0;
 		for (Integer factor: constrainedParameters) {
 			// VariableAndBDD p = parameters.get(i); <- 
-			// parameters ‚ª relevant‚È‚à‚Ì‚¾‚¯‚É‚È‚ê‚ÎCã‹L‚É•ÏX
+			// parameters ãŒ relevantãªã‚‚ã®ã ã‘ã«ãªã‚Œã°ï¼Œä¸Šè¨˜ã«å¤‰æ›´
 			VariableAndBDD p = parameters.get(i);
 
 			int lv = test.get(factor);
@@ -317,7 +317,7 @@ public class ConstraintHandler {
 
 class VariableAndBDD {
 	int[] var; // bdd nodes
-	// TODO –¼‘O constraint -> ‰½‚©‚æ‚¢‚à‚Ì‚É
+	// TODO åå‰ constraint -> ä½•ã‹ã‚ˆã„ã‚‚ã®ã«
 	int constraint; // bdd for invalid values
 
 	VariableAndBDD(int[] var, int constraint) {

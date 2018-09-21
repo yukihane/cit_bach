@@ -20,7 +20,7 @@ class GeneratorAll {
 		for (int i = 1; i < numOfAllCombinations; i++) {
 			tmptest = tmptest.makeClone();
 			for (int p = 0; p < parameterModel.size; p++) {
-				if (tmptest.get(p) + 1 >= parameterModel.range[p]) // ‚¯‚½‚ ‚°
+				if (tmptest.get(p) + 1 >= parameterModel.range[p]) // ã‘ãŸã‚ã’
 					tmptest.set(p, (byte) 0);
 				else {
 					tmptest.set(p, (byte) (tmptest.get(p) + 1));

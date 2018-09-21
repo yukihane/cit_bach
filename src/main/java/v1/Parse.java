@@ -33,7 +33,7 @@ public class Parse {
 		String nextToken = t.peepToken();
 		try {
 			if (nextToken == null) {
-				Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+				Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 						: "Invalid constraints");
 				return null;
 			}
@@ -43,24 +43,24 @@ public class Parse {
 			}
 			else {
 				// error
-				Error.printError(Main.language == Main.Language.JP ? "§–ñ‚É'('‚ª‚ ‚è‚Ü‚¹‚ñ"
+				Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ã«'('ãŒã‚ã‚Šã¾ã›ã‚“"
 						: "( expected in constraints");
 				return null;
 			}
 		} catch (OutOfTokenStreamException e) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "Invalid constraints");
 			return null;
 		}
 	}
 
 	private Node expressionWithParentheses() throws OutOfTokenStreamException {
-		Node res; // –ß‚è’l
+		Node res; // æˆ»ã‚Šå€¤
 		String token = t.getToken();
 		if (token.equals("(") == false) {
 			// error
 			// this block is unreachable
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ‚É'('‚ª‚ ‚è‚Ü‚¹‚ñ"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ã«'('ãŒã‚ã‚Šã¾ã›ã‚“"
 					: "( expected in constraints");
 			return null;
 		}
@@ -75,7 +75,7 @@ public class Parse {
 		// closed with ')' ?
 		if (t.getToken().equals(")") == false) {
 			// error
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ‚É')'‚ª‚ ‚è‚Ü‚¹‚ñ"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ã«')'ãŒã‚ã‚Šã¾ã›ã‚“"
 					: ") expected in constraints");
 			return null;
 		}
@@ -83,7 +83,7 @@ public class Parse {
 	}
 
 	private Node expressionBody() throws OutOfTokenStreamException {
-		// ‰‰Zq‚ÌŸ‚Ìƒg[ƒNƒ“‚ª ( ‚© ‚Ç‚¤‚©‚Å”»’f
+		// æ¼”ç®—å­ã®æ¬¡ã®ãƒˆãƒ¼ã‚¯ãƒ³ãŒ ( ã‹ ã©ã†ã‹ã§åˆ¤æ–­
 		// case 1: ( <> (
 		// case 2: ( <> [ foo, ( <> foo
 		String nextNextToken = t.peepNextToken();
@@ -191,7 +191,7 @@ public class Parse {
 	}
 
 	private Node atomExpression() throws OutOfTokenStreamException {
-		// Ÿ‚Ìƒg[ƒNƒ“‚ğƒ`ƒFƒbƒN: ‰‰Zq‚Å‚È‚¢‚Æ‚¢‚¯‚È‚¢
+		// æ¬¡ã®ãƒˆãƒ¼ã‚¯ãƒ³ã‚’ãƒã‚§ãƒƒã‚¯: æ¼”ç®—å­ã§ãªã„ã¨ã„ã‘ãªã„
 		String token = t.getToken();
 		if (token.equals("=="))
 			return equalityAtomExpression();
@@ -210,7 +210,7 @@ public class Parse {
 		else if (token.equals(">="))
 			return arithmeticEqualityAtomExpression(new GTE(), new LTE());
 		else
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚É == ‚© <> ‚ª•K—v‚Å‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã« == ã‹ <> ãŒå¿…è¦ã§ã™"
 					: "== or <> expected in constraints");
 		return null;
 	}
@@ -257,7 +257,7 @@ public class Parse {
 			t.getToken(); // must be [
 			para1 = t.getToken();
 			if (t.getToken().equals("]") == false) {
-				Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·"
+				Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™"
 						: "] expected in constraints");
 			}
 			return compareArithmeticParameterAndValue(para1, val1, com2);
@@ -267,7 +267,7 @@ public class Parse {
 		t.getToken(); // must be "["
 		para1 = t.getToken();
 		if (t.getToken().equals("]") == false) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™"
 					: "] expected in constraints");
 		}
 		token1 = t.peepToken();
@@ -284,7 +284,7 @@ public class Parse {
 		t.getToken(); // must be [
 		para2 = t.getToken();
 		if (t.getToken().equals("]") == false) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™"
 					: "] expected in constraints");
 		}
 		return compareArithmeticParameterAndParameter(para1, para2, com1);
@@ -319,7 +319,7 @@ public class Parse {
 			t.getToken(); // must be [
 			para1 = t.getToken();
 			if (t.getToken().equals("]") == false) {
-				Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·"
+				Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™"
 						: "] expected in constraints");
 			}
 			return compareParameterAndValue(para1, val1);
@@ -329,7 +329,7 @@ public class Parse {
 		t.getToken(); // must be "["
 		para1 = t.getToken();
 		if (t.getToken().equals("]") == false) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™"
 					: "] expected in constraints");
 		}
 		token1 = t.peepToken();
@@ -346,7 +346,7 @@ public class Parse {
 		t.getToken(); // must be [
 		para2 = t.getToken();
 		if (t.getToken().equals("]") == false) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™"
 					: "] expected in constraints");
 		}
 		return compareParameterAndParameter(para1, para2);
@@ -365,7 +365,7 @@ public class Parse {
 			d1 = Double.parseDouble(val1);
 			d2 = Double.parseDouble(val2);
 		} catch (NumberFormatException e) {
-			Error.printError(Main.language == Main.Language.JP ? "”‚Å‚È‚¢•¶š—ñ‚ğZp”äŠr‚µ‚Ä‚¢‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "æ•°ã§ãªã„æ–‡å­—åˆ—ã‚’ç®—è¡“æ¯”è¼ƒã—ã¦ã„ã¾ã™"
 					: "String that cannot be parsed as a number");			
 		}
 		if (com.hasRelation(d1, d2))
@@ -380,32 +380,32 @@ public class Parse {
 		// int value = 0;
 		List<Integer> valueIDs = null;
 
-		// ˆöq–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN
+		// å› å­åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯
 		try {
 			parameterID = parameterList.getID(para);
 			this.constrainedParameters.add(parameterID);
 		} catch (NoParameterNameException e) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ìˆöq–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å› å­åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "Invalid parameter name in constraints");
 		}
 		p = parameterList.get(parameterID);
 
-		// ’l–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN
+		// å€¤åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯
 		try {
 			valueIDs = p.getID(val);
 		} catch (NoValueNameException e) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ì’l–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å€¤åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "Invalid parameter value in constraints");
 		}
 
-		// ’l–¼‚Éd•¡‚È‚µ
+		// å€¤åã«é‡è¤‡ãªã—
 		if (valueIDs.size() == 1) {
 			ComparisonOfParameterAndValue res = new EqualityOfParameterAndValue();
 			res.p = parameterID;
 			res.v = valueIDs.get(0);
 			return res;
 		}
-		// ’l–¼‚Éd•¡‚ ‚è
+		// å€¤åã«é‡è¤‡ã‚ã‚Š
 		else {
 			BooleanMultinaryOperator res = new OrOperator();
 			for (Integer vid : valueIDs) {
@@ -424,41 +424,41 @@ public class Parse {
 		// int value = 0;
 		List<Integer> valueIDs = null;
 
-		// ˆöq–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN
+		// å› å­åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯
 		try {
 			parameterID = parameterList.getID(para);
 			this.constrainedParameters.add(parameterID);
 		} catch (NoParameterNameException e) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ìˆöq–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å› å­åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "Invalid parameter name in constraints");
 		}
 		p = parameterList.get(parameterID);
 
-		// ’l–¼‚ª” number ‚Æ‚È‚é‚©ƒ`ƒFƒbƒN
+		// å€¤åãŒæ•° number ã¨ãªã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 		double number = 0;
 		try {
 			number = Double.parseDouble(val);
 		} catch (NumberFormatException e) {
-			Error.printError(Main.language == Main.Language.JP ? "”‚Å‚È‚¢•¶š—ñ‚ğZp”äŠr‚µ‚Ä‚¢‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "æ•°ã§ãªã„æ–‡å­—åˆ—ã‚’ç®—è¡“æ¯”è¼ƒã—ã¦ã„ã¾ã™"
 					: "String that cannot be parsed as a number");		
 		}
 
-		// number‚ÆZp“I‚Éˆê’v‚·‚élevel‚ğ‚·‚×‚ÄƒŠƒXƒg‚É‚¢‚ê‚é
-		// -> level ŠÖŒW number ‚Æ‚È‚élevel‚ğ‚·‚×‚ÄƒŠƒXƒg‚É
+		// numberã¨ç®—è¡“çš„ã«ä¸€è‡´ã™ã‚‹levelã‚’ã™ã¹ã¦ãƒªã‚¹ãƒˆã«ã„ã‚Œã‚‹
+		// -> level é–¢ä¿‚ number ã¨ãªã‚‹levelã‚’ã™ã¹ã¦ãƒªã‚¹ãƒˆã«
 		valueIDs = p.getID(number, com);
 		
-		// ‚Ç‚ê‚àˆê’v‚¹‚¸
+		// ã©ã‚Œã‚‚ä¸€è‡´ã›ãš
 		if (valueIDs.size() == 0) {
 			return new FalseValue();
 		}
-		// ’l–¼‚Éd•¡‚È‚µ
+		// å€¤åã«é‡è¤‡ãªã—
 		if (valueIDs.size() == 1) {
 			ComparisonOfParameterAndValue res = new EqualityOfParameterAndValue();
 			res.p = parameterID;
 			res.v = valueIDs.get(0);
 			return res;
 		}
-		// ’l–¼‚Éd•¡‚ ‚è
+		// å€¤åã«é‡è¤‡ã‚ã‚Š
 		else {
 			BooleanMultinaryOperator res = new OrOperator();
 			for (Integer vid : valueIDs) {
@@ -475,20 +475,20 @@ public class Parse {
 		int parameterID1 = 0;
 		int parameterID2 = 0;
 		Parameter p1, p2;
-		// ˆöq–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN
+		// å› å­åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯
 		try {
 			parameterID1 = parameterList.getID(para1);
 			parameterID2 = parameterList.getID(para2);
 			this.constrainedParameters.add(parameterID1);
 			this.constrainedParameters.add(parameterID2);
 		} catch (NoParameterNameException e) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ìˆöq–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å› å­åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "Invalid parameter name in constraints");
 		}
 		p1 = parameterList.get(parameterID1);
 		p2 = parameterList.get(parameterID2);
 
-		// ’l–¼‚ªˆê’v‚·‚éƒyƒA‚ğ”‚¦‚é
+		// å€¤åãŒä¸€è‡´ã™ã‚‹ãƒšã‚¢ã‚’æ•°ãˆã‚‹
 		int count = 0;
 		for (String valName1 : p1.value_name) {
 			for (String valName2 : p2.value_name) {
@@ -497,11 +497,11 @@ public class Parse {
 			}
 		}
 
-		// case 1: ’l–¼‚Å“¯‚¶‚à‚Ì‚ª‚È‚¢
+		// case 1: å€¤åã§åŒã˜ã‚‚ã®ãŒãªã„
 		if (count == 0)
 			return new FalseValue();
 
-		// case 2: ’l–¼‚Å“¯‚¶‚à‚Ì‚ª‚Ğ‚Æ‚Â
+		// case 2: å€¤åã§åŒã˜ã‚‚ã®ãŒã²ã¨ã¤
 		if (count == 1) {
 			for (String valName1 : p1.value_name) {
 				for (String valName2 : p2.value_name) {
@@ -528,7 +528,7 @@ public class Parse {
 			}
 		}
 
-		// case 3: ’l–¼‚Å“¯‚¶‚à‚Ì‚ª2ŒÂˆÈã  —vdebug ‰½‚Å case 2‚İ‚½‚¢‚É‚µ‚Ä‚È‚¢‚ÌH
+		// case 3: å€¤åã§åŒã˜ã‚‚ã®ãŒ2å€‹ä»¥ä¸Š  è¦debug ä½•ã§ case 2ã¿ãŸã„ã«ã—ã¦ãªã„ã®ï¼Ÿ
 		BooleanMultinaryOperator res = new OrOperator();
 		for (int vid1 = 0; vid1 < p1.value_name.size(); vid1++) {
 			for (int vid2 = 0; vid2 < p2.value_name.size(); vid2++) {
@@ -553,20 +553,20 @@ public class Parse {
 		int parameterID1 = 0;
 		int parameterID2 = 0;
 		Parameter p1, p2;
-		// ˆöq–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN
+		// å› å­åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯
 		try {
 			parameterID1 = parameterList.getID(para1);
 			parameterID2 = parameterList.getID(para2);
 			this.constrainedParameters.add(parameterID1);
 			this.constrainedParameters.add(parameterID2);
 		} catch (NoParameterNameException e) {
-			Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ìˆöq–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+			Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å› å­åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
 					: "Invalid parameter name in constraints");
 		}
 		p1 = parameterList.get(parameterID1);
 		p2 = parameterList.get(parameterID2);
 
-		// ƒ_ƒuƒ‹‚Å‚Ì’l‚ªŠÖŒW‚ğ‚à‚ÂƒyƒA‚ğ”‚¦‚é
+		// ãƒ€ãƒ–ãƒ«ã§ã®å€¤ãŒé–¢ä¿‚ã‚’ã‚‚ã¤ãƒšã‚¢ã‚’æ•°ãˆã‚‹
 		int count = 0;
 		for (String valName1 : p1.value_name) {
 			for (String valName2 : p2.value_name) {
@@ -580,11 +580,11 @@ public class Parse {
 			}
 		}
 		
-		// case 1: ˆê’v‚·‚é’l–¼‚ª‚È‚¢
+		// case 1: ä¸€è‡´ã™ã‚‹å€¤åãŒãªã„
 		if (count == 0)
 			return new FalseValue();
 
-		// case 2: ˆê’v‚·‚é‚àƒyƒA‚ª‚Ğ‚Æ‚Â
+		// case 2: ä¸€è‡´ã™ã‚‹ã‚‚ãƒšã‚¢ãŒã²ã¨ã¤
 		if (count == 1) {
 			for (String valName1 : p1.value_name) {
 				for (String valName2 : p2.value_name) {
@@ -612,7 +612,7 @@ public class Parse {
 			} // outer for
 		}
 
-		// case 3: ’l–¼‚Å“¯‚¶‚à‚Ì‚ª2ŒÂˆÈã
+		// case 3: å€¤åã§åŒã˜ã‚‚ã®ãŒ2å€‹ä»¥ä¸Š
 		BooleanMultinaryOperator res = new OrOperator();
 		for (int vid1 = 0; vid1 < p1.value_name.size(); vid1++) {
 			for (int vid2 = 0; vid2 < p2.value_name.size(); vid2++) {
@@ -676,27 +676,27 @@ class GTE extends RelationOverDoublePair {
  * this.parameterList = parameterList; }
  * 
  * public Node parseExpression() { String token = t.peepToken(); try { if (token
- * == null) { Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·"
+ * == null) { Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™"
  * : "Invalid constraints"); return null; } else if (token.equals("(")) return
  * expressionWithParentheses(); else { // error Error.printError(Main.language
- * == Main.Language.JP ? "§–ñ‚É'('‚ª‚ ‚è‚Ü‚¹‚ñ" : "( expected in constraints"); return
+ * == Main.Language.JP ? "åˆ¶ç´„ã«'('ãŒã‚ã‚Šã¾ã›ã‚“" : "( expected in constraints"); return
  * null; } } catch (OutOfTokenStreamException e) {
- * Error.printError(Main.language == Main.Language.JP ? "§–ñ®‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·" :
+ * Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™" :
  * "Invalid constraints"); return null; } }
  * 
  * private Node expressionWithParentheses() throws OutOfTokenStreamException {
- * Node res; // –ß‚è’l String token = t.getToken(); if (token.equals("(") == false)
+ * Node res; // æˆ»ã‚Šå€¤ String token = t.getToken(); if (token.equals("(") == false)
  * { // error // this block is unreachable Error.printError(Main.language ==
- * Main.Language.JP ? "§–ñ‚É'('‚ª‚ ‚è‚Ü‚¹‚ñ" : "( expected in constraints"); return
+ * Main.Language.JP ? "åˆ¶ç´„ã«'('ãŒã‚ã‚Šã¾ã›ã‚“" : "( expected in constraints"); return
  * null; } // expression :: (expression) if (t.peepToken() == null) throw new
  * OutOfTokenStreamException(); if (t.peepToken().equals("(")) res =
  * expressionWithParentheses(); else // otherwise res = expressionBody(); //
  * closed with ')' ? if (t.getToken().equals(")") == false) { // error
- * Error.printError(Main.language == Main.Language.JP ? "§–ñ‚É')'‚ª‚ ‚è‚Ü‚¹‚ñ" :
+ * Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ã«')'ãŒã‚ã‚Šã¾ã›ã‚“" :
  * ") expected in constraints"); return null; } return res; }
  * 
  * private Node expressionBody() throws OutOfTokenStreamException { //
- * ‰‰Zq‚ÌŸ‚Ìƒg[ƒNƒ“‚ª ( ‚© ‚Ç‚¤‚©‚Å”»’f // case 1: ( <> ( // case 2: ( <> [ foo, ( <> foo
+ * æ¼”ç®—å­ã®æ¬¡ã®ãƒˆãƒ¼ã‚¯ãƒ³ãŒ ( ã‹ ã©ã†ã‹ã§åˆ¤æ–­ // case 1: ( <> ( // case 2: ( <> [ foo, ( <> foo
  * String token = t.peepNextToken(); if (token == null) throw new
  * OutOfTokenStreamException(); if (token.equals("(")) return boolExpression();
  * else return atomExpression(); }
@@ -750,10 +750,10 @@ class GTE extends RelationOverDoublePair {
  * parseExpression(); return res; }
  * 
  * private Node atomExpression() throws OutOfTokenStreamException { //
- * Ÿ‚Ìƒg[ƒNƒ“‚ğƒ`ƒFƒbƒN: ‰‰Zq‚Å‚È‚¢‚Æ‚¢‚¯‚È‚¢ String token = t.getToken(); if (token.equals("=="))
+ * æ¬¡ã®ãƒˆãƒ¼ã‚¯ãƒ³ã‚’ãƒã‚§ãƒƒã‚¯: æ¼”ç®—å­ã§ãªã„ã¨ã„ã‘ãªã„ String token = t.getToken(); if (token.equals("=="))
  * return equalityAtomExpression(); else if (token.equals("<>")) return
  * inequalityAtomExpression(); else Error.printError(Main.language ==
- * Main.Language.JP ? "§–ñ®‚É == ‚© <> ‚ª•K—v‚Å‚·" :
+ * Main.Language.JP ? "åˆ¶ç´„å¼ã« == ã‹ <> ãŒå¿…è¦ã§ã™" :
  * "== or <> expected in constraints"); return null; }
  * 
  * private Node inequalityAtomExpression() throws OutOfTokenStreamException {
@@ -775,12 +775,12 @@ class GTE extends RelationOverDoublePair {
  * //case 2 if ((token1.equals("[") == false) && (token2.equals("[") == true)) {
  * val1 = t.getToken(); t.getToken(); // must be [ para1 = t.getToken(); if
  * (t.getToken().equals("]") == false) { Error.printError(Main.language ==
- * Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·" : "] expected in constraints"); } return
+ * Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™" : "] expected in constraints"); } return
  * compareParameterAndValue(para1, val1); }
  * 
  * // case 3, 4 t.getToken(); // must be "[" para1 = t.getToken(); if
  * (t.getToken().equals("]") == false) { Error.printError(Main.language ==
- * Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·" : "] expected in constraints"); } token1 =
+ * Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™" : "] expected in constraints"); } token1 =
  * t.peepToken(); if (token1 == null) throw new OutOfTokenStreamException();
  * 
  * // case 3 if (token1.equals("[") == false) { val1 = t.getToken(); return
@@ -788,41 +788,41 @@ class GTE extends RelationOverDoublePair {
  * 
  * // case 4 t.getToken(); // must be [ para2 = t.getToken(); if
  * (t.getToken().equals("]") == false) { Error.printError(Main.language ==
- * Main.Language.JP ? "§–ñ®‚É]‚ª•K—v‚Å‚·" : "] expected in constraints"); } return
+ * Main.Language.JP ? "åˆ¶ç´„å¼ã«]ãŒå¿…è¦ã§ã™" : "] expected in constraints"); } return
  * compareParameterAndParameter(para1, para2); }
  * 
  * private Node compareValueAndValue(String val1, String val2) { if
  * (val1.equals(val2)) return new TrueValue(); else return new FalseValue(); }
  * 
  * private Node compareParameterAndValue(String para, String val) { int
- * parameterID = 0; Parameter p; int value = 0; // ˆöq–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN try {
+ * parameterID = 0; Parameter p; int value = 0; // å› å­åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯ try {
  * parameterID = parameterList.getID(para); } catch (NoParameterNameException e)
- * { Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ìˆöq–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·" :
+ * { Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å› å­åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™" :
  * "Invalid parameter name in constraints"); } p =
  * parameterList.get(parameterID);
  * 
- * // ’l–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN try { value = p.getID(val); } catch (NoValueNameException e) {
- * Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ì’l–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·" :
+ * // å€¤åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯ try { value = p.getID(val); } catch (NoValueNameException e) {
+ * Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å€¤åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™" :
  * "Invalid parameter value in constraints"); }
  * 
  * ComparisonOfParameterAndValue res = new EqualityOfParameterAndValue(); res.p
  * = parameterID; res.v = value; return res; }
  * 
  * private Node compareParameterAndParameter(String para1, String para2) { int
- * parameterID1 = 0; int parameterID2 = 0; Parameter p1, p2; // ˆöq–¼‚ª³‚µ‚¢‚©ƒ`ƒFƒbƒN try
+ * parameterID1 = 0; int parameterID2 = 0; Parameter p1, p2; // å› å­åãŒæ­£ã—ã„ã‹ãƒã‚§ãƒƒã‚¯ try
  * { parameterID1 = parameterList.getID(para1); parameterID2 =
  * parameterList.getID(para2); } catch (NoParameterNameException e) {
- * Error.printError(Main.language == Main.Language.JP ? "§–ñ’†‚Ìˆöq–¼‚ÉŒë‚è‚ª‚ ‚è‚Ü‚·" :
+ * Error.printError(Main.language == Main.Language.JP ? "åˆ¶ç´„ä¸­ã®å› å­åã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™" :
  * "Invalid parameter name in constraints"); } p1 =
  * parameterList.get(parameterID1); p2 = parameterList.get(parameterID2);
  * 
  * List<String> commonValueName = new ArrayList<String>(p1.value_name);
  * commonValueName.retainAll(p2.value_name);
  * 
- * // case 1: ’l–¼‚Å“¯‚¶‚à‚Ì‚ª‚È‚¢ if (commonValueName.size() == 0) return new
+ * // case 1: å€¤åã§åŒã˜ã‚‚ã®ãŒãªã„ if (commonValueName.size() == 0) return new
  * FalseValue();
  * 
- * // case 2: ’l–¼‚Å“¯‚¶‚à‚Ì‚ª‚Ğ‚Æ‚Â if (commonValueName.size() == 1) { String valueName =
+ * // case 2: å€¤åã§åŒã˜ã‚‚ã®ãŒã²ã¨ã¤ if (commonValueName.size() == 1) { String valueName =
  * commonValueName.get(0); BooleanMultinaryOperator res = new AndOperator();
  * ComparisonOfParameterAndValue sub1 = new EqualityOfParameterAndValue();
  * ComparisonOfParameterAndValue sub2 = new EqualityOfParameterAndValue(); try {
@@ -831,7 +831,7 @@ class GTE extends RelationOverDoublePair {
  * Error.printError("Inner error"); } res.ChildList.add(sub1);
  * res.ChildList.add(sub2); return res; }
  * 
- * // case 3: ’l–¼‚Å“¯‚¶‚à‚Ì‚ª2ŒÂˆÈã BooleanMultinaryOperator res = new OrOperator(); for
+ * // case 3: å€¤åã§åŒã˜ã‚‚ã®ãŒ2å€‹ä»¥ä¸Š BooleanMultinaryOperator res = new OrOperator(); for
  * (String valueName: commonValueName) { BooleanMultinaryOperator child = new
  * AndOperator(); ComparisonOfParameterAndValue sub1 = new
  * EqualityOfParameterAndValue(); ComparisonOfParameterAndValue sub2 = new

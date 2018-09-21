@@ -7,7 +7,7 @@ import java.io.OutputStreamWriter;
 
 public class Error {
 
-	// default ‚ÅƒGƒ‰[‚Í•W€o—Í
+	// default ã§ã‚¨ãƒ©ãƒ¼ã¯æ¨™æº–å‡ºåŠ›
 	static String filename = null;
 
 	public static void setOutputFile(String filename) {
@@ -24,8 +24,8 @@ public class Error {
 			writer.write("#ERROR," + str + "\n");
 			writer.close();
 		} catch (IOException e) {
-			System.err.print(Main.language == Main.Language.JP ? "o—Íƒtƒ@ƒCƒ‹"
-					+ filename + "‚ªì¬‚Å‚«‚Ü‚¹‚ñD" : "Output file " + filename
+			System.err.print(Main.language == Main.Language.JP ? "å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«"
+					+ filename + "ãŒä½œæˆã§ãã¾ã›ã‚“ï¼" : "Output file " + filename
 					+ " could not be created.");
 		}
 		System.exit(1);

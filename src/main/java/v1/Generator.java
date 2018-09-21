@@ -57,7 +57,7 @@ abstract class Generator {
 
 	abstract List<Testcase> generate() throws OutOfMaxNumOfTestcasesException;
 
-	// group‚Å‘S–Ô—…‚·‚étuple‚Ì—ñ‚ğ¶¬
+	// groupã§å…¨ç¶²ç¾…ã™ã‚‹tupleã®åˆ—ã‚’ç”Ÿæˆ
 	protected List<List<Testcase>> generateTupleSequenceList() {
 		// protected List<TupleSequence> generateTupleSequence() {
 		// TODO Auto-generated method stub
@@ -88,7 +88,7 @@ abstract class Generator {
 			tmptest = tmptest.makeClone();
 			for (int j = 0; j < g.member.length; j++) {
 				int p = g.member[j];
-				if (tmptest.get(p) + 1 >= parametermodel.range[p]) // ‚¯‚½‚ ‚°
+				if (tmptest.get(p) + 1 >= parametermodel.range[p]) // ã‘ãŸã‚ã’
 					tmptest.set(p, (byte) 0);
 				else {
 					tmptest.set(p, (byte) (tmptest.get(p) + 1));
@@ -98,8 +98,8 @@ abstract class Generator {
 			if (constrainthandler.isPossible(tmptest)) {
 				testSet.add(tmptest);
 				if (testSet.size() > MaxNumOfTestcases)
-					Error.printError(Main.language == Main.Language.JP ? "“Á’èˆöq‚Ì‘S–Ô—…‚ÉãŒÀ"
-							+ MaxNumOfTestcases + "‚ğ’´‚¦‚éƒeƒXƒgƒP[ƒX‚ª•K—v‚Å‚·"
+					Error.printError(Main.language == Main.Language.JP ? "ç‰¹å®šå› å­ã®å…¨ç¶²ç¾…ã«ä¸Šé™"
+							+ MaxNumOfTestcases + "ã‚’è¶…ãˆã‚‹ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹ãŒå¿…è¦ã§ã™"
 							: "The number of test cases exceeds the upper bound "
 									+ MaxNumOfTestcases);
 			}
@@ -124,7 +124,7 @@ class Generator2 extends Generator {
 	 * ConstraintHandler constrainthandler; final List<Testcase> seed; final int
 	 * numOfParameters; final Random rnd;
 	 * 
-	 * //TODO group‚Ì’Ç‰Á Generator2 (ParameterModel parametermodel, GList
+	 * //TODO groupã®è¿½åŠ  Generator2 (ParameterModel parametermodel, GList
 	 * groupList, ConstraintHandler constrainthandler, List<Testcase> seed, long
 	 * randomseed){ this.parametermodel = parametermodel; this.groupList =
 	 * groupList; this.constrainthandler = constrainthandler; this.seed = seed;
@@ -147,13 +147,13 @@ class Generator2 extends Generator {
 		List<Testcase> res = new ArrayList<Testcase>();
 		PairTable tab = new PairTable(parametermodel);
 
-		// group–ˆCtuple—ñ‚Ìì¬
+		// groupæ¯ï¼Œtupleåˆ—ã®ä½œæˆ
 		List<List<Testcase>> tupleSequenceList = generateTupleSequenceList();
 
 		//
 		int numOfUncoveredTuples = checkAllTuples(tab);
 
-		// Še<ˆöqE’l> ‚É ‚»‚ê‚ªŠÜ‚Ü‚ê‚é–¢ƒJƒo[‚Ìtuple‚Ì‘”‚ğİ’è
+		// å„<å› å­ãƒ»å€¤> ã« ãã‚ŒãŒå«ã¾ã‚Œã‚‹æœªã‚«ãƒãƒ¼ã®tupleã®ç·æ•°ã‚’è¨­å®š
 		ArrayList<Integer>[] uncovTab = new ArrayList[parametermodel.size];
 		initializeUncovTab(uncovTab, tab);
 
@@ -166,7 +166,7 @@ class Generator2 extends Generator {
 
 		int seedrownum = 0;
 		while (numOfUncoveredTuples > 0 || hasTuplesToCover(tupleSequenceList)) {
-			// testcase 1ŒÂ¶¬
+			// testcase 1å€‹ç”Ÿæˆ
 			ResultOfGenerateOneTest newresult = generateOneTest(tab,
 					seedrownum, uncovTab, tupleSequenceList);
 
@@ -206,7 +206,7 @@ class Generator2 extends Generator {
 
 	private void initializeUncovTab(ArrayList<Integer>[] uncovTab, PairTable tab) {
 		assert (parametermodel.size == uncovTab.length);
-		// uncovTab‚ÌŒvZDpair (strength = 2) ‚Ìê‡
+		// uncovTabã®è¨ˆç®—ï¼pair (strength = 2) ã®å ´åˆ
 		for (int p1 = 0; p1 < parametermodel.size; p1++) {
 			uncovTab[p1] = new ArrayList<Integer>();
 			for (byte v1 = 0; v1 < parametermodel.range[p1]; v1++) {
@@ -227,7 +227,7 @@ class Generator2 extends Generator {
 	private ResultOfGenerateOneTest generateOneTest(PairTable tab,
 			int seedrownum, ArrayList<Integer>[] uncovTab,
 			List<List<Testcase>> tupleSequenceList) {
-		// ‹ó‚ÌƒeƒXƒgƒP[ƒX‚ğ1‚Â‚Â‚­‚é
+		// ç©ºã®ãƒ†ã‚¹ãƒˆã‚±ãƒ¼ã‚¹ã‚’1ã¤ã¤ãã‚‹
 		Testcase tmp = new Testcase(parametermodel.size);
 		tmp.quantify();
 
@@ -235,7 +235,7 @@ class Generator2 extends Generator {
 
 		// debug: System.err.print("seedrownum: " + seedrownum + "-> ");
 
-		// seed‚ÌƒRƒs[@§–ñ‚ğ–‚½‚³‚È‚©‚Á‚½‚çƒGƒ‰[
+		// seedã®ã‚³ãƒ”ãƒ¼ã€€åˆ¶ç´„ã‚’æº€ãŸã•ãªã‹ã£ãŸã‚‰ã‚¨ãƒ©ãƒ¼
 		if (seed.size() > 0 && seedrownum < seed.size()) {
 			isSeedUsed = true;
 			Testcase seedrow = seed.get(seedrownum);
@@ -244,17 +244,17 @@ class Generator2 extends Generator {
 			}
 		}
 		if (constrainthandler.isPossible(tmp) == false) {
-			Error.printError(Main.language == Main.Language.JP ? "seed‚Ì"
-					+ (seedrownum + 1) + "s–Ú‚ª§–ñˆá”½‚Å‚·" : "The" + (seedrownum + 1)
+			Error.printError(Main.language == Main.Language.JP ? "seedã®"
+					+ (seedrownum + 1) + "è¡Œç›®ãŒåˆ¶ç´„é•åã§ã™" : "The" + (seedrownum + 1)
 					+ "th seeding row violates the constraints.");
 			return null;
 		}
 
-		// TODO tmp‚ÉƒOƒ‹[ƒv‚ğ’Ç‰Á
+		// TODO tmpã«ã‚°ãƒ«ãƒ¼ãƒ—ã‚’è¿½åŠ 
 		addGroupedTuples(tmp, tupleSequenceList);
 
-		// TODO ŒJ‚è•Ô‚³‚¹‚é
-		// generateTempTest ‚Å‚Í tab‚ğXV‚µ‚È‚¢
+		// TODO ç¹°ã‚Šè¿”ã•ã›ã‚‹
+		// generateTempTest ã§ã¯ tabã‚’æ›´æ–°ã—ãªã„
 		Testcase temptest = generateTempTest(tmp, tab, uncovTab);
 		int count = this.computeNewlyCoveredTuples(tab, temptest);
 
@@ -273,14 +273,14 @@ class Generator2 extends Generator {
 
 		// System.err.println(computeNewlyCoveredTuples(tab, temptest));
 
-		// ƒJƒo[‚µ‚½ƒyƒA[‚ğÀÛ‚ÉuncovTab‚É”½‰f
-		// finalizePairTable‚æ‚è‘O‚Å‚È‚¢‚Æ‚¾‚ß
+		// ã‚«ãƒãƒ¼ã—ãŸãƒšã‚¢ãƒ¼ã‚’å®Ÿéš›ã«uncovTabã«åæ˜ 
+		// finalizePairTableã‚ˆã‚Šå‰ã§ãªã„ã¨ã ã‚
 		finallizeUncoverTable(uncovTab, tab, temptest);
 
-		// ƒJƒo[‚µ‚½ƒyƒA[‚ğÀÛ‚Étab‚É”½‰f
+		// ã‚«ãƒãƒ¼ã—ãŸãƒšã‚¢ãƒ¼ã‚’å®Ÿéš›ã«tabã«åæ˜ 
 		int newtuples = finalizePairTable(tab, temptest);
 
-		// •Ô‚è’l‚Ìİ’è
+		// è¿”ã‚Šå€¤ã®è¨­å®š
 		ResultOfGenerateOneTest res = new ResultOfGenerateOneTest();
 		res.test = temptest;
 		res.numOfCoveredTuples = newtuples;
@@ -334,14 +334,14 @@ class Generator2 extends Generator {
 	private Testcase generateTempTest(Testcase seedrow, PairTable tab,
 			ArrayList<Integer>[] uncovTab) {
 
-		// tmp‚ğƒRƒs[
+		// tmpã‚’ã‚³ãƒ”ãƒ¼
 		Testcase tmp = seedrow.makeClone();
 
-		// TODO ƒ‰ƒ“ƒ_ƒ€‚Èˆöq—ñ‚ğ¶¬
+		// TODO ãƒ©ãƒ³ãƒ€ãƒ ãªå› å­åˆ—ã‚’ç”Ÿæˆ
 		int[] parametersequence = new int[parametermodel.size];
 		for (int i = 0; i < parametermodel.size; i++)
 			parametersequence[i] = i;
-		// ƒVƒƒƒbƒtƒ‹
+		// ã‚·ãƒ£ãƒƒãƒ•ãƒ«
 		for (int i = 1; i < parametermodel.size; i++) {
 			int dst = this.rnd.nextInt(i + 1);
 			int tmppara = parametersequence[i];
@@ -354,12 +354,12 @@ class Generator2 extends Generator {
 		 * System.out.print(parametersequence[i] + " "); System.out.println();
 		 */
 
-		// Šeˆöq‚É‚Â‚¢‚Ä
+		// å„å› å­ã«ã¤ã„ã¦
 		for (int i = 0; i < parametermodel.size; i++) {
 			int p = parametersequence[i];
-			// ’l‚ª‚«‚Ü‚Á‚Ä‚¢‚È‚¢‚È‚ç
+			// å€¤ãŒãã¾ã£ã¦ã„ãªã„ãªã‚‰
 			if (tmp.get(p) < 0) {
-				// Še’l‚É‚æ‚Á‚ÄƒJƒo[‚³‚ê‚éƒyƒA‚ğ”‚¦CÅ‘å‚Ì‚à‚Ì‚ğ‘I‘ğ
+				// å„å€¤ã«ã‚ˆã£ã¦ã‚«ãƒãƒ¼ã•ã‚Œã‚‹ãƒšã‚¢ã‚’æ•°ãˆï¼Œæœ€å¤§ã®ã‚‚ã®ã‚’é¸æŠ
 				int newlyCoveredTuples = -1;
 				byte bestValue = -1;
 				for (byte v = 0; v < this.parametermodel.range[p]; v++) {
@@ -374,14 +374,14 @@ class Generator2 extends Generator {
 				}
 				// assert (bestValue >= 0) : "error in chosing a value";
 				if (bestValue == -1) {
-					Error.printError(Main.language == Main.Language.JP ? "seed‚É§–ñˆá”½‚Ìs‚ª‚ ‚è‚Ü‚·"
+					Error.printError(Main.language == Main.Language.JP ? "seedã«åˆ¶ç´„é•åã®è¡ŒãŒã‚ã‚Šã¾ã™"
 							: "Some seeding row violates the constraints.");
 
 					return null;
 				}
 				if (newlyCoveredTuples == 0) {
-					// TODO ƒJƒo[” 0 ‚È‚çCŠú‘Ò‚³‚ê‚éƒyƒA”‚ğ”‚¦CÅ‘å‚Ì‚à‚Ì‚ğ‘I‘ğ
-					// TODO Šú‘Ò‚·‚éƒyƒA”‚É‚ÍCâ‘Î‚É‚Ş‚è‚È‚à‚Ì‚à‚ ‚éi‚·‚Å‚É’l‚ªŒˆ‚Ü‚Á‚Ä‚¢‚éˆöq‚Æ‚ÌƒyƒAj
+					// TODO ã‚«ãƒãƒ¼æ•° 0 ãªã‚‰ï¼ŒæœŸå¾…ã•ã‚Œã‚‹ãƒšã‚¢æ•°ã‚’æ•°ãˆï¼Œæœ€å¤§ã®ã‚‚ã®ã‚’é¸æŠ
+					// TODO æœŸå¾…ã™ã‚‹ãƒšã‚¢æ•°ã«ã¯ï¼Œçµ¶å¯¾ã«ã‚€ã‚Šãªã‚‚ã®ã‚‚ã‚ã‚‹ï¼ˆã™ã§ã«å€¤ãŒæ±ºã¾ã£ã¦ã„ã‚‹å› å­ã¨ã®ãƒšã‚¢ï¼‰
 					bestValue = -1;
 					int possibleTuples = -1;
 
@@ -401,7 +401,7 @@ class Generator2 extends Generator {
 								candidateValues.add(v);
 						}
 					}
-					// ‚Ç‚ê‚ğ‘I‚ñ‚Å‚à“¯‚¶‚È‚çCƒ‰ƒ“ƒ_ƒ€‚É‘I‚Ô
+					// ã©ã‚Œã‚’é¸ã‚“ã§ã‚‚åŒã˜ãªã‚‰ï¼Œãƒ©ãƒ³ãƒ€ãƒ ã«é¸ã¶
 					// for tie breaking
 					if (possibleTuples == 0)
 						bestValue = candidateValues.get(this.rnd
@@ -411,7 +411,7 @@ class Generator2 extends Generator {
 			}
 		}
 
-		// VƒJƒo[‚ª0‚Æ‚¢‚¤‚±‚Æ‚à‚ ‚é
+		// æ–°ã‚«ãƒãƒ¼ãŒ0ã¨ã„ã†ã“ã¨ã‚‚ã‚ã‚‹
 		return tmp;
 	}
 
@@ -455,13 +455,13 @@ class Generator2 extends Generator {
 			for (int j = i + 1; j < numOfParameters; j++) {
 				for (byte v1 = 0; v1 < parametermodel.range[i]; v1++)
 					for (byte v2 = 0; v2 < parametermodel.range[j]; v2++) {
-						// pair‚Ì¶¬
+						// pairã®ç”Ÿæˆ
 						Testcase pair = new Testcase(numOfParameters);
 						pair.quantify();
 						pair.set(i, v1);
 						pair.set(j, v2);
-						// pair‚Ìƒ`ƒFƒbƒN
-						// ‹Ö‘¥ˆá”½‚È‚çset
+						// pairã®ãƒã‚§ãƒƒã‚¯
+						// ç¦å‰‡é•åãªã‚‰set
 						if (constrainthandler.isPossible(pair) == false) {
 							tab.set(i, v1, j, v2);
 						} else
@@ -510,7 +510,7 @@ class PairTable extends TupleTable {
 					table[i][j] = new PairList(parametermodel.range[i],
 							parametermodel.range[j]);
 				else if (i > j) {
-					// TODO: ƒGƒ‰[‚ª‚Å‚éH‚È‚ñ‚ÅH
+					// TODO: ã‚¨ãƒ©ãƒ¼ãŒã§ã‚‹ï¼Ÿãªã‚“ã§ï¼Ÿ
 					// table[i][j].list = table[j][i].list.clone();
 				}
 
@@ -539,7 +539,7 @@ class PairTable extends TupleTable {
 		return this.table[p1][p2].list[v1 + v2 * (parametermodel.range[p1])];
 	}
 
-	// Œ»‚ê‚È‚¢ê‡D‚·‚Å‚ÉƒJƒo[‚µ‚½ê‡
+	// ç¾ã‚Œãªã„å ´åˆï¼ã™ã§ã«ã‚«ãƒãƒ¼ã—ãŸå ´åˆ
 	void set(int p1, byte v1, int p2, byte v2) {
 		if (p2 < p1) {
 			int tmp = p1;

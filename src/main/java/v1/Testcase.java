@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Testcase {
 	byte[] value; // 0..level-1, or <0 (wildcard)
 
-	// ‚±‚ê‚ğ‘¼‚©‚ç“Ç‚ñ‚Å‚é‚Æ‚Ü‚¸‚¢‚©‚àH
+	// ã“ã‚Œã‚’ä»–ã‹ã‚‰èª­ã‚“ã§ã‚‹ã¨ã¾ãšã„ã‹ã‚‚ï¼Ÿ
 	public Testcase(int n) {
 		this.value = new byte[n];
 	}
@@ -46,7 +46,7 @@ public class Testcase {
 		System.err.println();
 	}
 
-	// TODO Outputer.java ‚ÉˆÚ“®
+	// TODO Outputer.java ã«ç§»å‹•
 	void print(BufferedWriter writer, InputFileData inputfiledata)
 			throws IOException {
 		for (int i = 0; i < value.length; i++)
@@ -56,9 +56,9 @@ public class Testcase {
 		writer.write("\n");
 	}
 
-	// tuple‚ğd‚Ë‚é
+	// tupleã‚’é‡ã­ã‚‹
 	// return true if a tuple is superimposed
-	// d‚Ë‚½‚É‹Ö‘¥‚Éˆá”½‚·‚é‚±‚Æ‚ ‚è->ƒ`ƒFƒbƒN‚·‚é
+	// é‡ã­ãŸæ™‚ã«ç¦å‰‡ã«é•åã™ã‚‹ã“ã¨ã‚ã‚Š->ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	boolean superimpose(Testcase tuple, ConstraintHandler h) {
 		Testcase tmp = this.makeClone();
 		if (tmp.superimpose(tuple) == false)
@@ -69,9 +69,9 @@ public class Testcase {
 		// must be true;
 	}
 
-	// tuple‚ğd‚Ë‚é
+	// tupleã‚’é‡ã­ã‚‹
 	// return true if a tuple is superimposed
-	// d‚Ë‚½‚É‹Ö‘¥‚Éˆá”½‚·‚é‚±‚Æ‚ ‚è->ƒ`ƒFƒbƒN‚µ‚È‚¢
+	// é‡ã­ãŸæ™‚ã«ç¦å‰‡ã«é•åã™ã‚‹ã“ã¨ã‚ã‚Š->ãƒã‚§ãƒƒã‚¯ã—ãªã„
 	private boolean superimpose(Testcase tuple) {
 		// TODO Auto-generated method stu
 		for (int i = 0; i < value.length; i++) {

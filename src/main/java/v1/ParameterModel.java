@@ -1,9 +1,9 @@
 package v1;
 
 public class ParameterModel {
-	// ˆöŽq‚Ì”
+	// å› å­ã®æ•°
 	public final int size;
-	// ŠeˆöŽq‚ÌƒŒƒxƒ‹”
+	// å„å› å­ã®ãƒ¬ãƒ™ãƒ«æ•°
 	public final byte[] range;
 
 	public ParameterModel(PList plist) {
