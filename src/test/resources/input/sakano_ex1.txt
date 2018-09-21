@@ -1,0 +1,21 @@
+# さかの
+
+# 因子と水準
+OS (Windows Mac Linux)
+BR (IE FF CH)
+MEM (2 4 8)
+# Sys (A B)
+# Dis (S H)
+
+
+# 制約
+#(if (== [OS] Mac) (<> [BR] IE))
+
+#1
+(if (== [OS] Windows) (== [BR] IE))
+
+#2
+(if (== [BR] IE) (<> [MEM] 2))
+
+
+

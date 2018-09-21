@@ -1,0 +1,11 @@
+OS,BR,MEM
+Mac,IE,4
+Mac,FF,2
+Windows,IE,8
+Linux,FF,4
+Mac,CH,8
+Linux,CH,2
+Linux,IE,8
+Mac,FF,8
+Windows,IE,4
+Mac,CH,4

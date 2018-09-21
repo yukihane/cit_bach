@@ -1,0 +1,14 @@
+OS,メモリ,SDD,CPU,Disk,Disk2
+Windows7,2,2.0,Corei7,SDD,SDD
+Windows7,8,2,Corei5,HDD,HDD
+Windows7_64,8.0,2.0,Atom,SDD,HDD
+Vista,NA,2,Corei5,SDD,SDD
+Vista,NA,2.0,Corei7,HDD,HDD
+Windows7_64,2,2,Atom,HDD,SDD
+Windows7_64,8,2.0,Corei7,SDD,SDD
+Vista,8.0,2,Corei7,HDD,SDD
+Vista,2,2.0,Corei5,SDD,HDD
+Vista,8,2.0,Atom,HDD,HDD
+Windows7,NA,2.0,Atom,SDD,HDD
+Windows7,8.0,2,Corei5,HDD,SDD
+Windows7_64,NA,2,Corei5,SDD,HDD
