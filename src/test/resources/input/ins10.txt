@@ -1,0 +1,32 @@
+# #以降，改行までコメントと見なす．
+
+OS (Windows7 Windows7_64 Vista) 
+メモリ (4.0 2 1 8 8.0 NA)
+SDD (4  2.0 2)
+CPU ( Corei7  Corei5 Atom )
+Disk (SDD HDD)
+Disk2 (SDD HDD)
+
+# グループ化→3網羅以上のため
+# {OS メモリ Disk}  {メモリ Disk CPU}
+
+# 制約(禁則)を列挙
+
+(or (>=  [メモリ] [SDD]) (== [メモリ] NA))
+
+(<> [メモリ] 4.0)
+(<> [SDD] 4)
+# (if (and (=== [メモリ] 8) (== [Disk] HDD) ) (or (== Vista [OS]) (<> [OS] Windows7) (<> [Disk] [Disk2]) ))
+
+#(ite (== [Disk] [Disk2]) (== [メモリ] 4) (<> [メモリ] 2))
+
+#(and (not (and (<> [OS] Windows7_64) (== 8 [メモリ]))) (or (<> [OS] [メモリ]) (<> 4 [メモリ]) (== [Disk] [CPU] )))
+
+
+# 単項演算子：not
+# ２項演算子：==，<>, if
+# ３項演算子：ite (if-then-elseの意味)
+# 多項演算子：or, and 
+
+# 算術演算子（因子の値に対する演算．結果はブール値）
+# ==, <> 

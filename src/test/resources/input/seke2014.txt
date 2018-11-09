@@ -1,0 +1,11 @@
+# SEKE 2014
+
+# 因子と水準
+OS (Windows7 Windows8 Linux)
+Browser (IE Firefox)
+Protocol (IPv4 IPv6)
+DBMS (MySQL Sybase Oracle)
+
+# 制約
+#1
+(if (== [OS] Linux) (<> [Browser] IE))

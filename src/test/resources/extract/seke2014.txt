@@ -1,0 +1,10 @@
+OS,Browser,Protocol,DBMS
+Windows7,IE,IPv4,MySQL
+Windows8,Firefox,IPv6,MySQL
+Linux,Firefox,IPv4,Sybase
+Windows7,Firefox,IPv6,Oracle
+Windows8,IE,IPv6,Sybase
+Windows8,IE,IPv4,Oracle
+Linux,Firefox,IPv6,MySQL
+Windows7,IE,IPv6,Sybase
+Linux,Firefox,IPv6,Oracle

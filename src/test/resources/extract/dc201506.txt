@@ -1,0 +1,11 @@
+P1,P2,P3
+b,a,b
+b,b,a
+a,a,c
+c,b,b
+b,c,c
+c,c,a
+c,a,c
+b,b,c
+a,a,b
+b,c,b
