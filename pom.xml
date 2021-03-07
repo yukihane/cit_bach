@@ -68,19 +68,10 @@
 		</plugins>
 	</build>
 	<dependencies>
-		<!--
 		<dependency>
 			<groupId>org.bitbucket.vahidi</groupId>
 			<artifactId>jdd</artifactId>
 			<version>108</version>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>org.bitbucket.vahidi</groupId>
-			<artifactId>jdd</artifactId>
-			<version>104</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/jdd_104.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
